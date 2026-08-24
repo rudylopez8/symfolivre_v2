@@ -1,0 +1,87 @@
+security:
+    password_hashers:
+        App\Entity\User: auto
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    role_hierarchy:
+        ROLE_AUTEUR: [ROLE_USER]
+        ROLE_ADMIN:  [ROLE_AUTEUR, ROLE_USER]
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|assets|bundles)/
+            security: false
+
+        main:
+            lazy: true
+            provider: app_user_provider
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_book_index
+                enable_csrf: true
+            logout:
+                path: app_logout
+                target: app_login
+
+    access_control:
+        # ═══════════════════════════════════════
+        # Ordre important : du plus spécifique au plus général
+        # ═══════════════════════════════════════
+
+        # ── Public ──
+        - path: ^/register
+          roles: PUBLIC_ACCESS
+        - path: ^/login
+          roles: PUBLIC_ACCESS
+        - path: ^/logout
+          roles: PUBLIC_ACCESS
+        - path: ^/api
+          roles: PUBLIC_ACCESS
+
+        # ── Lecture publique ──
+        - path: ^/$
+          roles: PUBLIC_ACCESS
+        - path: ^/book$
+          roles: PUBLIC_ACCESS
+        - path: ^/book/\d+$
+          roles: PUBLIC_ACCESS
+        - path: ^/category$
+          roles: PUBLIC_ACCESS
+        - path: ^/category/\d+$
+          roles: PUBLIC_ACCESS
+
+        # ── Authentifié (ROLE_USER et +) ──
+        - path: ^/book/\d+/read
+          roles: ROLE_USER
+        - path: ^/book/\d+/download
+          roles: ROLE_USER
+        - path: ^/reading/basket
+          roles: ROLE_USER
+        - path: ^/profile
+          roles: ROLE_USER
+          
+        # ── Auteur et + ──
+        - path: ^/book/new
+          roles: ROLE_AUTEUR
+        - path: ^/book/\d+/edit
+          roles: ROLE_AUTEUR
+        - path: ^/book/\d+$
+          roles: ROLE_AUTEUR
+          methods: POST
+
+        # ── Admin ──
+        - path: ^/category/new
+          roles: ROLE_ADMIN
+        - path: ^/category/\d+/edit
+          roles: ROLE_ADMIN
+        - path: ^/category/\d+$
+          roles: ROLE_ADMIN
+          methods: POST
+        - path: ^/admin/
+          roles: ROLE_ADMIN

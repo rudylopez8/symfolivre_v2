@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item active">Mon profil</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-4"><i class="fa-solid fa-id-card me-2 text-primary"></i>Mon profil</h1>
+
+                <dl class="row mb-4">
+                    <dt class="col-sm-4">Nom complet</dt>
+                    <dd class="col-sm-8">{{ user.firstname }} {{ user.lastname }}</dd>
+
+                    <dt class="col-sm-4">E-mail</dt>
+                    <dd class="col-sm-8">{{ user.email }}</dd>
+
+                    <dt class="col-sm-4">Rôle</dt>
+                    <dd class="col-sm-8">
+                        {% for role in user.roles %}
+                            <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : role == 'ROLE_AUTEUR' ? 'primary' : 'secondary' }}">
+                                {{ role | replace({'ROLE_': ''}) }}
+                            </span>
+                        {% endfor %}
+                    </dd>
+
+                    {% if is_granted('ROLE_AUTEUR') %}
+                    <dt class="col-sm-4">Livres publiés</dt>
+                    <dd class="col-sm-8">{{ user.books|length }}</dd>
+                    {% endif %}
+                </dl>
+
+                <a href="{{ path('app_profile_edit') }}" class="btn btn-outline-warning">
+                    <i class="fa-solid fa-pen me-1"></i>Modifier mes informations
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier « {{ category.label }}» – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_category_index') }}">Catégories</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_category_show', {'id': category.id}) }}">{{ category.label }}</a></li>
+        <li class="breadcrumb-item active">Modifier</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-4">
+                    <i class="fa-solid fa-pen me-2 text-warning"></i>Modifier « {{ category.label }} »
+                </h1>
+                {{ form_widget(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

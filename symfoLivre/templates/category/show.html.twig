@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.label }} – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_category_index') }}">Catégories</a></li>
+        <li class="breadcrumb-item active">{{ category.label }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-2"><i class="fa-solid fa-folder text-secondary me-2"></i>{{ category.label }}</h1>
+                {% if category.description %}
+                    <p class="text-muted">{{ category.description }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <h2 class="h5 mb-3">Livres dans cette catégorie</h2>
+        <div class="row g-3">
+            {% for book in category.books|default([]) %}
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 book-card">
+                        <div class="card-body d-flex flex-column">
+                            <span class="badge bg-{{ book.type == 'AUDIO' ? 'warning text-dark' : 'primary' }} mb-2">
+                                {{ book.type == 'AUDIO' ? 'Audio' : 'Texte' }}
+                            </span>
+                            <h6 class="card-title">
+                                <a href="{{ path('app_book_show', {'id': book.id}) }}" class="text-decoration-none">
+                                    {{ book.title }}
+                                </a>
+                            </h6>
+                            <small class="text-muted">
+                                {% if book.author %}{{ book.author.firstname }} {{ book.author.lastname }}{% endif %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-light border">Aucun livre dans cette catégorie pour le moment.</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h5 class="h6 mb-3">Gestion</h5>
+                <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-outline-warning w-100 mb-2">
+                    <i class="fa-solid fa-pen me-1"></i>Modifier
+                </a>
+                {% include 'category/_delete_form.html.twig' with {'btn_class': 'btn btn-outline-danger w-100'} %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

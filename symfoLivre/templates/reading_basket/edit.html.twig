@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ReadingBasket{% endblock %}
+
+{% block body %}
+    <h1>Edit ReadingBasket</h1>
+
+    {{ include('reading_basket/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_reading_basket_index') }}">back to list</a>
+
+    {{ include('reading_basket/_delete_form.html.twig') }}
+{% endblock %}

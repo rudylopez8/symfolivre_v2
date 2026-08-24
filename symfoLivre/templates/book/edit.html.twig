@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier « {{ book.title }}» – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_book_index') }}">Bibliothèque</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_book_show', {'id': book.id}) }}">{{ book.title }}</a></li>
+        <li class="breadcrumb-item active">Modifier</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-4">
+                    <i class="fa-solid fa-pen me-2 text-warning"></i>Modifier « {{ book.title }} »
+                </h1>
+                {% include 'book/_form.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

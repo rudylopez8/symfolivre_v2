@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}"
+      onsubmit="return confirm('Supprimer l\'utilisateur « {{ user.firstname }} {{ user.lastname }} » ?');"
+      style="display:inline;">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+    <button type="submit" class="btn btn-sm btn-outline-danger" title="Supprimer">
+        <i class="fa-solid fa-trash"></i>
+    </button>
+</form>

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ basket.book.title }} – Panier – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_reading_basket_index') }}">Panier</a></li>
+        <li class="breadcrumb-item active">{{ basket.book.title }}</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4 text-center">
+                <div class="mb-3">
+                    <span class="badge bg-{{ basket.book.type == 'AUDIO' ? 'warning text-dark' : 'primary' }} fs-6 px-3 py-2">
+                        <i class="fa-solid {{ basket.book.type == 'AUDIO' ? 'fa-headphones' : 'fa-file-lines' }} me-1"></i>
+                        {{ basket.book.type == 'AUDIO' ? 'Audio' : 'Texte' }}
+                    </span>
+                </div>
+
+                <h2 class="h4 mb-2">{{ basket.book.title }}</h2>
+
+                {% if basket.book.author %}
+                    <p class="text-muted mb-2">
+                        <i class="fa-solid fa-pen-nib me-1"></i>
+                        {{ basket.book.author.firstname }} {{ basket.book.author.lastname }}
+                    </p>
+                {% endif %}
+
+                <p class="text-muted small mb-4">
+                    Ajouté au panier le {{ basket.addedAt | date('d/m/Y à H:i') }}
+                </p>
+
+                <div class="d-flex flex-column gap-2">
+                    {% if basket.book.type == 'TEXTE' %}
+                        <a href="{{ path('app_book_read', {'id': basket.book.id}) }}"
+                           class="btn btn-success">
+                            <i class="fa-solid fa-book-open me-1"></i>Lire en ligne
+                        </a>
+                    {% endif %}
+
+                    <a href="{{ path('app_book_download', {'id': basket.book.id}) }}"
+                       class="btn btn-primary">
+                        <i class="fa-solid fa-download me-1"></i>Télécharger
+                    </a>
+
+                    <a href="{{ path('app_book_show', {'id': basket.book.id}) }}"
+                       class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-circle-info me-1"></i>Page du livre
+                    </a>
+
+                    {% include 'reading_basket/_delete_form.html.twig' with {
+                        'id': basket.id,
+                        'label': 'Retirer du panier',
+                        'btn_class': 'btn btn-outline-danger w-100'
+                    } %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

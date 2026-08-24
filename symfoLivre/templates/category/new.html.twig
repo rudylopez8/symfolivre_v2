@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle catégorie – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_category_index') }}">Catégories</a></li>
+        <li class="breadcrumb-item active">Nouvelle</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-4">
+                    <i class="fa-solid fa-folder-plus me-2 text-primary"></i>Nouvelle catégorie
+                </h1>
+                {{ form_widget(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

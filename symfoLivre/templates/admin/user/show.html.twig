@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }} – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_book_index') }}">Bibliothèque</a></li>
+        <li class="breadcrumb-item active">{{ book.title }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                    <div>
+                        <h1 class="h2 mb-2">{{ book.title }}</h1>
+                        <div class="mb-3">
+                            <span class="badge bg-{{ book.type == 'AUDIO' ? 'warning text-dark' : 'primary' }}">
+                                <i class="fa-solid {{ book.type == 'AUDIO' ? 'fa-headphones' : 'fa-file-lines' }} me-1"></i>
+                                {{ book.type == 'AUDIO' ? 'Audio (.zip)' : 'Texte (.txt / .md)' }}
+                            </span>
+                            {% if book.category %}
+                                <a href="{{ path('app_category_show', {'id': book.category.id}) }}"
+                                   class="badge bg-secondary text-decoration-none ms-1">
+                                    <i class="fa-solid fa-folder me-1"></i>{{ book.category.label }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {# ─── Actions (Auteur / Admin) ─── #}
+                    {% if is_granted('ROLE_AUTEUR') and (app.user == book.author or is_granted('ROLE_ADMIN')) %}
+                        <div class="d-flex gap-1">
+                            <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn btn-sm btn-outline-warning"
+                               title="Modifier">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            {% include 'book/_delete_form.html.twig' %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <hr>
+
+                <dl class="row mb-4">
+                    <dt class="col-sm-4">Auteur</dt>
+                    <dd class="col-sm-8">
+                        {% if book.author %}
+                            {{ book.author.firstname }} {{ book.author.lastname }}
+                        {% else %}
+                            <span class="text-muted">Non spécifié</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-4">ISBN</dt>
+                    <dd class="col-sm-8"><code>{{ book.isbn }}</code></dd>
+
+                    <dt class="col-sm-4">Date de publication</dt>
+                    <dd class="col-sm-8">
+                        {% if book.publicationDate %}
+                            {{ book.publicationDate | date('d/m/Y') }}
+                        {% else %}
+                            <span class="text-muted">Non renseignée</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-4">Ajouté au site</dt>
+                    <dd class="col-sm-8">{{ book.createdAt | date('d/m/Y H:i') }}</dd>
+                </dl>
+
+                {% if book.summary %}
+                    <h5 class="h6">Résumé</h5>
+                    <p class="mb-0">{{ book.summary | nl2br }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h5 class="h6 mb-3"><i class="fa-solid fa-download me-1"></i>Actions</h5>
+
+                {% if is_granted('ROLE_USER') %}
+                    {% if book.type == 'TEXTE' %}
+                        <a href="{{ path('app_book_read', {'id': book.id}) }}"
+                           class="btn btn-success w-100 mb-2">
+                            <i class="fa-solid fa-book-open me-1"></i>Lire en ligne
+                        </a>
+                    {% endif %}
+
+                    <a href="{{ path('app_book_download', {'id': book.id}) }}"
+                       class="btn btn-primary w-100 mb-2">
+                        <i class="fa-solid fa-download me-1"></i>Télécharger
+                    </a>
+
+                    <a href="{{ path('app_reading_basket_new') }}?book_id={{ book.id }}"
+                       class="btn btn-outline-secondary w-100 mb-2">
+                        <i class="fa-solid fa-basket-shopping me-1"></i>Ajouter au panier
+                    </a>
+                {% else %}
+                    <div class="alert alert-light border small mb-2">
+                        <i class="fa-solid fa-lock me-1"></i>
+                        <a href="{{ path('app_login') }}">Connectez-vous</a> pour lire et télécharger.
+                    </div>
+                {% endif %}
+
+                <hr>
+                <p class="text-muted small mb-0">
+                    <i class="fa-solid fa-file me-1"></i>
+                    Extension : .{{ book.filePath | split('.') | last }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

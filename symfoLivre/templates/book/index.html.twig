@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bibliothèque – symfoLivre{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0"><i class="fa-solid fa-book-open me-2"></i>Bibliothèque</h1>
+    {% if is_granted('ROLE_AUTEUR') %}
+        <a href="{{ path('app_book_new') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus me-1"></i>Ajouter un livre
+        </a>
+    {% endif %}
+</div>
+
+{# ─── Barre de recherche ─── #}
+<form method="get" action="{{ path('app_book_index') }}" class="row g-2 mb-4">
+    <div class="col-md-8">
+        <div class="input-group">
+            <span class="input-group-text bg-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" class="form-control" name="q"
+                   placeholder="Titre, ISBN ou catégorie…" value="{{ query }}">
+        </div>
+    </div>
+    <div class="col-md-4 d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-grow-1">Rechercher</button>
+        {% if query %}
+            <a href="{{ path('app_book_index') }}" class="btn btn-outline-secondary">Réinitialiser</a>
+        {% endif %}
+    </div>
+</form>
+
+{# ─── Résultats ─── #}
+{% if books is empty %}
+    <div class="alert alert-info text-center">
+        <i class="fa-solid fa-inbox fa-2x mb-2 d-block"></i>
+        Aucun livre trouvé{% if query %} pour « {{ query }} »{% endif %}.
+    </div>
+{% else %}
+    <p class="text-muted mb-3">{{ books|length }} livre{{ books|length > 1 ? 's' : '' }} trouvé{{ books|length > 1 ? 's' : '' }}</p>
+
+    <div class="row g-3">
+        {% for book in books %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 book-card">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-2">
+                        <span class="badge bg-{{ book.type == 'AUDIO' ? 'warning text-dark' : 'primary' }}">
+                            <i class="fa-solid {{ book.type == 'AUDIO' ? 'fa-headphones' : 'fa-file-lines' }} me-1"></i>
+                            {{ book.type == 'AUDIO' ? 'Audio' : 'Texte' }}
+                        </span>
+                        {% if book.category %}
+                            <span class="badge bg-secondary ms-1">{{ book.category.label }}</span>
+                        {% endif %}
+                    </div>
+                    <h5 class="card-title">
+                        <a href="{{ path('app_book_show', {'id': book.id}) }}" class="text-decoration-none">
+                            {{ book.title }}
+                        </a>
+                    </h5>
+                    <p class="card-text small text-muted">
+                        {% if book.author %}
+                            <i class="fa-solid fa-pen-nib me-1"></i>{{ book.author.firstname }} {{ book.author.lastname }}
+                        {% endif %}
+                        {% if book.publicationDate %}
+                            <br><i class="fa-solid fa-calendar me-1"></i>{{ book.publicationDate | date('Y') }}
+                        {% endif %}
+                    </p>
+                    {% if book.summary %}
+                        <p class="card-text small flex-grow-1">
+                            {{ book.summary | slice(0, 120) }}{% if book.summary|length > 120 %}…{% endif %}
+                        </p>
+                    {% endif %}
+                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-sm btn-outline-primary mt-2">
+                        <i class="fa-solid fa-eye me-1"></i>Détails
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

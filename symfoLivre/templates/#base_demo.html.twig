@@ -1,0 +1,527 @@
+{#
+    ================================================================
+    templates/base.html.twig
+    ================================================================
+    Layout de base — Système de design « Bibliothèque »
+    ------------------------------------------------------
+    • Charte graphique (tokens CSS)
+    • Composants UI réutilisables (boutons, cartes, tableaux,
+      formulaires, badges, alertes, stats)
+    • Structure : navbar → flash → contenu → footer
+    • Blocs Twig pour les templates enfants
+    • Compatible Symfony 7, importmap, FrankenPHP
+
+    Réutilisable tel quel dans tout projet Symfony de type
+    bibliothèque / catalogue / bibliothèque numérique.
+    ================================================================
+#}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bibliothèque{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Bibliothèque numérique{% endblock %}">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>📚</text></svg>">
+
+    <!-- ============================================================
+         1. TOKENS — Charte graphique (modifiables en un seul endroit)
+         ============================================================ -->
+    <style id="sf-design-tokens">
+        :root {
+            /* Couleurs */
+            --clr-primary:        #1a365d;
+            --clr-primary-light:  #2c5282;
+            --clr-accent:         #d69e2e;
+            --clr-accent-light:   #f6e05e;
+            --clr-bg:             #f7fafc;
+            --clr-surface:        #ffffff;
+            --clr-text:           #2d3748;
+            --clr-text-muted:     #718096;
+            --clr-border:         #e2e8f0;
+            --clr-success:        #38a169;
+            --clr-danger:         #e53e3e;
+            --clr-warning:        #dd6b20;
+            --clr-info:           #3182ce;
+
+            /* Géométrie */
+            --radius:             8px;
+            --radius-lg:          12px;
+
+            /* Ombres — 3 niveaux */
+            --shadow:             0 1px 3px rgba(0,0,0,.1),  0 1px 2px  rgba(0,0,0,.06);
+            --shadow-md:          0 4px 6px rgba(0,0,0,.07), 0 2px 4px  rgba(0,0,0,.06);
+            --shadow-lg:          0 10px 15px rgba(0,0,0,.1),0 4px 6px  rgba(0,0,0,.05);
+
+            /* Typo */
+            --font:               'Segoe UI', system-ui, -apple-system, sans-serif;
+
+            /* Misc */
+            --transition:         .2s ease;
+        }
+    </style>
+
+    <!-- ============================================================
+         2. BASE — Reset, corps, typo
+         ============================================================ -->
+    <style id="sf-base">
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html  { scroll-behavior: smooth; }
+        body  {
+            font-family: var(--font);
+            background: var(--clr-bg);
+            color: var(--clr-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        a    { color: var(--clr-primary-light); text-decoration: none; transition: color var(--transition); }
+        a:hover { color: var(--clr-accent); }
+        ul   { list-style: none; }
+        img  { max-width: 100%; }
+    </style>
+
+    <!-- ============================================================
+         3. NAVBAR — structure générique
+         ============================================================ -->
+    <style id="sf-navbar">
+        .sf-navbar {
+            background: var(--clr-primary);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 58px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+        .sf-navbar .sf-brand {
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+        .sf-navbar .sf-brand:hover { color: #fff; }
+        .sf-navbar .sf-brand span { color: var(--clr-accent-light); }
+        .sf-navbar .sf-nav       { display: flex; align-items: center; gap: .15rem; }
+        .sf-navbar .sf-nav a {
+            color: rgba(255,255,255,.85);
+            padding: .5rem .85rem;
+            border-radius: var(--radius);
+            font-size: .88rem;
+            transition: background var(--transition);
+        }
+        .sf-navbar .sf-nav a:hover,
+        .sf-navbar .sf-nav a.active { background: rgba(255,255,255,.12); color: #fff; }
+        .sf-navbar .sf-actions { display: flex; align-items: center; gap: .6rem; }
+        .sf-navbar .sf-user  { color: rgba(255,255,255,.8); font-size: .85rem; }
+
+        @media (max-width: 768px) {
+            .sf-navbar { padding: 0 1rem; min-height: auto; flex-wrap: wrap; gap: .5rem; }
+            .sf-navbar .sf-nav { display: none; }
+        }
+    </style>
+
+    <!-- ============================================================
+         4. COMPOSANTS UI — réutilisables dans tous les templates
+         ============================================================ -->
+    <style id="sf-components">
+
+        /* ── Boutons ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .5rem 1.1rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-family: var(--font);
+            font-weight: 500;
+            font-size: .88rem;
+            transition: all var(--transition);
+            text-decoration: none;
+        }
+        .btn:hover      { color: #fff; }
+        .btn-primary   { background: var(--clr-primary);   color: #fff; }
+        .btn-primary:hover   { background: var(--clr-primary-light); }
+        .btn-accent    { background: var(--clr-accent);    color: #fff; }
+        .btn-accent:hover    { background: #b7791f; }
+        .btn-outline   { background: transparent; border: 1.5px solid var(--clr-border); color: var(--clr-text); }
+        .btn-outline:hover   { border-color: var(--clr-primary); color: var(--clr-primary); }
+        .btn-danger    { background: var(--clr-danger);    color: #fff; }
+        .btn-danger:hover    { background: #c53030; }
+        .btn-success   { background: var(--clr-success);   color: #fff; }
+        .btn-success:hover   { background: #2f855a; }
+        .btn-sm  { padding: .35rem .7rem; font-size: .8rem; }
+        .btn-lg  { padding: .7rem 1.4rem; font-size: .95rem; }
+
+        /* ── Carte générique ── */
+        .sf-card {
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .sf-card:hover { box-shadow: var(--shadow-lg); }
+        .sf-card .sf-card-body { padding: 1.25rem; }
+        .sf-card .sf-card-head { padding: 1rem 1.25rem; border-bottom: 1px solid var(--clr-border); font-weight: 600; }
+
+        /* ── Grille de cartes ── */
+        .sf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+        @media (max-width: 768px) { .sf-grid { grid-template-columns: 1fr; } }
+
+        /* ── Tableau ── */
+        .sf-table-wrapper {
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+        .sf-table-wrapper table { width: 100%; border-collapse: collapse; }
+        .sf-table-wrapper thead { background: var(--clr-primary); color: #fff; }
+        .sf-table-wrapper th,
+        .sf-table-wrapper td { padding: .8rem 1.15rem; text-align: left; font-size: .9rem; }
+        .sf-table-wrapper tbody tr { border-bottom: 1px solid var(--clr-border); }
+        .sf-table-wrapper tbody tr:hover { background: #f0f5ff; }
+
+        /* ── Formulaire ── */
+        .sf-form .sf-field { margin-bottom: 1.1rem; }
+        .sf-form .sf-field label {
+            display: block;
+            font-weight: 500;
+            font-size: .88rem;
+            margin-bottom: .3rem;
+        }
+        .sf-form .sf-field input,
+        .sf-form .sf-field select,
+        .sf-form .sf-field textarea {
+            width: 100%;
+            padding: .6rem .9rem;
+            border: 1.5px solid var(--clr-border);
+            border-radius: var(--radius);
+            font-family: var(--font);
+            font-size: .9rem;
+            transition: border-color var(--transition);
+            background: var(--clr-surface);
+            color: var(--clr-text);
+        }
+        .sf-form .sf-field input:focus,
+        .sf-form .sf-field select:focus,
+        .sf-form .sf-field textarea:focus {
+            outline: none;
+            border-color: var(--clr-primary-light);
+        }
+        .sf-form .sf-field textarea { min-height: 100px; resize: vertical; }
+        .sf-form .sf-field .sf-help { font-size: .78rem; color: var(--clr-text-muted); margin-top: .25rem; }
+        .sf-form .sf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 768px) { .sf-form .sf-row { grid-template-columns: 1fr; } }
+
+        /* ── Badge ── */
+        .sf-badge {
+            display: inline-block;
+            padding: .2rem .6rem;
+            border-radius: 4px;
+            font-size: .75rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .sf-badge-success { background: var(--clr-success); }
+        .sf-badge-info    { background: var(--clr-info); }
+        .sf-badge-warning { background: var(--clr-warning); }
+        .sf-badge-danger  { background: var(--clr-danger); }
+        .sf-badge-accent  { background: var(--clr-accent); }
+        .sf-badge-muted   { background: var(--clr-text-muted); }
+
+        /* ── Alertes / Flash ── */
+        .sf-alert {
+            padding: .8rem 1.2rem;
+            border-radius: var(--radius);
+            font-size: .9rem;
+            margin-bottom: 1rem;
+        }
+        .sf-alert-success { background: #f0fff4; border: 1px solid #c6f6d5; color: #22543d; }
+        .sf-alert-error   { background: #fff5f5; border: 1px solid #fed7d7; color: #c53030; }
+        .sf-alert-warning { background: #fffaf0; border: 1px solid #feebc8; color: #c05621; }
+        .sf-alert-info    { background: #ebf8ff; border: 1px solid #bee3f8; color: #2a4365; }
+
+        /* ── Page header ── */
+        .sf-page-header { text-align: center; margin-bottom: 2rem; }
+        .sf-page-header h1 { font-size: 1.9rem; color: var(--clr-primary); margin-bottom: .4rem; }
+        .sf-page-header p  { color: var(--clr-text-muted); font-size: .95rem; }
+
+        /* ── Stats ── */
+        .sf-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .sf-stat {
+            background: var(--clr-surface);
+            padding: 1.1rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .sf-stat .sf-stat-num  { font-size: 1.9rem; font-weight: 700; color: var(--clr-primary); }
+        .sf-stat .sf-stat-lbl  { font-size: .78rem; color: var(--clr-text-muted); text-transform: uppercase; letter-spacing: .4px; }
+
+        /* ── Onglets ── */
+        .sf-tabs { display: flex; border-bottom: 2px solid var(--clr-border); margin-bottom: 1.25rem; }
+        .sf-tab  {
+            padding: .65rem 1.3rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: .88rem;
+            color: var(--clr-text-muted);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all var(--transition);
+        }
+        .sf-tab:hover  { color: var(--clr-primary); }
+        .sf-tab.active { color: var(--clr-primary); border-bottom-color: var(--clr-accent); }
+
+        /* ── Hero / bannière ── */
+        .sf-hero {
+            background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+        .sf-hero h1 { font-size: 2.2rem; margin-bottom: .5rem; }
+        .sf-hero h1 span { color: var(--clr-accent-light); }
+        .sf-hero p  { opacity: .9; max-width: 560px; margin: 0 auto 1.2rem; font-size: 1.05rem; }
+
+        /* ── Recherche ── */
+        .sf-search { display: flex; max-width: 560px; margin: 0 auto; }
+        .sf-search input {
+            flex: 1;
+            padding: .7rem 1.1rem;
+            border: none;
+            border-radius: var(--radius) 0 0 var(--radius);
+            font-size: .92rem;
+            font-family: var(--font);
+            outline: none;
+        }
+
+        .sf-search button {
+            padding: .7rem 1.3rem;
+            border: none;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            background: var(--clr-accent);
+            color: #fff;
+            font-weight: 600;
+            font-size: .9rem;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background var(--transition);
+        }
+        .sf-search button:hover { background: #b7791f; }
+
+        /* ── Dropzone ── */
+        .sf-dropzone {
+            border: 2px dashed var(--clr-border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition);
+            background: var(--clr-surface);
+        }
+        .sf-dropzone:hover,
+        .sf-dropzone.dragover { border-color: var(--clr-accent); background: #fffbf0; }
+        .sf-dropzone .sf-dropzone-icon { font-size: 2.2rem; margin-bottom: .5rem; }
+        .sf-dropzone p { color: var(--clr-text-muted); font-size: .9rem; }
+
+        /* ── Code block (API docs) ── */
+        .sf-code {
+            background: var(--clr-primary);
+            color: #e2e8f0;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius);
+            font-family: 'Cascadia Code', 'Fira Code', monospace;
+            font-size: .85rem;
+            overflow-x: auto;
+            line-height: 1.7;
+            margin: .75rem 0;
+        }
+        .sf-code .sf-code-method { color: var(--clr-accent-light); font-weight: 700; }
+        .sf-code .sf-code-param  { color: #90cdf4; }
+
+        /* ── Empty state ── */
+        .sf-empty {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: var(--clr-text-muted);
+        }
+        .sf-empty .sf-empty-icon { font-size: 3rem; margin-bottom: .75rem; }
+        .sf-empty p { font-size: .95rem; }
+
+        /* ── Page footer ── */
+        .sf-footer {
+            background: var(--clr-primary);
+            color: rgba(255,255,255,.7);
+            text-align: center;
+            padding: 1.1rem 2rem;
+            font-size: .83rem;
+            margin-top: auto;
+        }
+        .sf-footer a { color: var(--clr-accent-light); }
+
+        /* ── Utilitaires ── */
+        .text-center  { text-align: center; }
+        .text-muted   { color: var(--clr-text-muted); }
+        .text-sm      { font-size: .85rem; }
+        .text-lg      { font-size: 1.1rem; }
+        .font-bold    { font-weight: 700; }
+        .mt-1 { margin-top: .5rem;  }
+        .mt-2 { margin-top: 1rem;   }
+        .mt-3 { margin-top: 1.5rem; }
+        .mt-4 { margin-top: 2rem;   }
+        .mb-1 { margin-bottom: .5rem;  }
+        .mb-2 { margin-bottom: 1rem;   }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .d-flex           { display: flex; align-items: center; }
+        .d-flex-between   { display: flex; align-items: center; justify-content: space-between; }
+        .gap-1 { gap: .5rem; }
+        .gap-2 { gap: 1rem;  }
+        .w-full { width: 100%; }
+
+        /* ── Responsive global ── */
+        @media (max-width: 768px) {
+            .sf-page-header h1 { font-size: 1.5rem; }
+            .sf-hero h1        { font-size: 1.6rem; }
+            .sf-main          { padding: 1.25rem !important; }
+        }
+    </style>
+
+    <!-- ============================================================
+         5. Stylesheets spécifiques au projet (CSS bundle, Tailwind…)
+         ============================================================ -->
+    {% block stylesheets %}
+        {#
+            Exemples selon la stack choisie :
+
+            Vite / Symfony UX :
+                <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+
+            Assets classiques :
+                <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+            Tailwind (CDN démo) :
+                <script src="https://cdn.tailwindcss.com"></script>
+        #}
+    {% endblock %}
+
+    <!-- ============================================================
+         6. JavaScript (importmap + scripts custom)
+         ============================================================ -->
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+
+    <!-- ============================================================
+         7. FrankenPHP Hot Reload (environnement dev uniquement)
+         ============================================================ -->
+    {% set frankenphp_hot_reload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
+    {% if frankenphp_hot_reload %}
+        <meta name="frankenphp-hot-reload:url" content="{{ frankenphp_hot_reload }}">
+        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
+        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
+    {% endif %}
+</head>
+
+<body>
+
+    <!-- ============================================================
+         8. NAVBAR — structure générique avec blocs enfants
+         ============================================================ -->
+    <header class="sf-navbar">
+        <a href="{{ path('app_home') }}" class="sf-brand">
+            {% block brand %}📚 <span>Bibliothèque</span>{% endblock %}
+        </a>
+
+        <nav class="sf-nav">
+            {% block navbar_links %}
+                {#
+                    Les templates enfants ou un partial injectent ici
+                    leurs liens :
+                    <a href="{{ path('app_catalog') }}">Catalogue</a>
+                    <a href="{{ path('app_admin') }}">Admin</a>
+                    etc.
+                #}
+            {% endblock %}
+        </nav>
+
+        <div class="sf-actions">
+            {% block navbar_actions %}
+                {% if app.user %}
+                    <span class="sf-user">👤 {{ app.user.username }}</span>
+                    <form method="post" action="{{ path('app_logout') }}" class="d-flex" style="gap:.5rem;margin:0;">
+                        <button type="submit" class="btn btn-sm"
+                                style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);">
+                            Déconnexion
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-sm"
+                       style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);">
+                        Se connecter
+                    </a>
+                {% endif %}
+            {% endblock %}
+        </div>
+    </header>
+
+    <!-- ============================================================
+         9. FLASH MESSAGES — Symfony standard
+         ============================================================ -->
+    {% block flash_messages %}
+        <div style="max-width:1200px;margin:1rem auto 0;padding:0 2rem;">
+            {% for label, messages in app.flashes(['success', 'error', 'warning', 'info']) %}
+                {% for message in messages %}
+                    <div class="sf-alert sf-alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endblock %}
+
+    <!-- ============================================================
+         10. CONTENU PRINCIPAL
+         ============================================================ -->
+    <main class="sf-main" style="flex:1;width:100%;max-width:1200px;margin:0 auto;padding:2rem;">
+        {% block body %}{% endblock %}
+    </main>
+
+    <!-- ============================================================
+         11. FOOTER
+         ============================================================ -->
+    <footer class="sf-footer">
+        {% block footer %}
+            &copy; {{ "now"|date("Y") }}
+            <a href="{{ path('app_home') }}">Bibliothèque</a>
+            — Tous droits réservés
+        {% endblock %}
+    </footer>
+
+    <!-- ============================================================
+         12. Scripts en bas de page (optionnel)
+         ============================================================ -->
+    {% block body_scripts %}{% endblock %}
+
+</body>
+</html>

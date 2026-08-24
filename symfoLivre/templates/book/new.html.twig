@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un livre – symfoLivre{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('app_book_index') }}">Bibliothèque</a></li>
+        <li class="breadcrumb-item active">Ajouter</li>
+    </ol>
+</nav>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h3 mb-4">
+                    <i class="fa-solid fa-book-plus me-2 text-primary"></i>Ajouter un livre
+                </h1>
+                {% include 'book/_form.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

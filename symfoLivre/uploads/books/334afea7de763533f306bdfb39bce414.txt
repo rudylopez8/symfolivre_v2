@@ -1,0 +1,1007 @@
+Voici le cahier des charges de l'application.
+```txt
+Cahier des charges : Site de Bibliothèque en Symfony
+1. Introduction
+L'objectif de ce projet est de développer un site web de bibliothèque en utilisant le framework Symfony. Le site permettra à différents types d'utilisateurs (visiteurs, lecteurs, auteurs et administrateurs) d'interagir avec des livres stockés sous forme de fichiers (.txt ou .md pour les livres texte, ou de dossiers .zip renfermant une liste de fichier .mp3 pour les livres audio) et classés par catégorie. Les lecteurs pourront lire et télécharger des livres, les auteurs pourront faire de même en plus de pouvoir téléverser des livres, tandis que les administrateurs auront la capacité de gérer sans restrictions les livres et les utilisateurs. Les visiteurs non identifiés ne pourront que consulter la liste des livres. Le nom du site sera symfoLivre
+2. Fonctionnalités
+a. Authentification et Gestion des Utilisateurs
+- Système d'authentification avec des rôles (visiteur, lecteur, auteur, administrateur).
+- Inscription d'utilisateurs avec des profils distincts (lecteur, auteur).
+- Profil administrateur pour la gestion des utilisateurs.
+b. Gestion des Livres
+- Création, modification et suppression de livres (administrateur).
+- Téléchargement et lecture de livres (lecteurs et auteurs).
+- Téléversement de livres (auteurs).
+- Classement des livres par catégorie.
+c. Interface Utilisateur
+- Page d'accueil avec une liste de livres.
+- Pages de détails de livre avec, titre du livre, auteur du livre, résumé du livre, ISBN du livre, date de publication du livre, type du livre (texte ou audio), et bouton de téléchargement.
+- Profils d'utilisateurs avec des informations personnelles (lecteur, auteur).
+- Panier de lecture pour les lecteurs.
+d. Sécurité
+- Protection contre l'accès non autorisé aux fonctionnalités (authentification requise).
+- Gestion des autorisations basées sur les rôles.
+e. Recherche
+- Barre de recherche pour trouver des livres par titre, auteur ou catégorie.
+f. API
+- API pour permettre l'interrogation du site symfoLivre pour rechercher un livre par son titre, ou son ISBN.
+3. Technologie
+a. Symfony Framework
+- Utilisation de Symfony pour le développement.
+b. Base de Données
+- Utilisation d'une base de données (MySQL, PostgreSQL, etc.) pour stocker les informations sur les livres et les utilisateurs.
+c. Stockage de Fichiers
+- Stockage des fichiers de livres sur le serveur.
+4. Documentation
+a. Documentation du code source.
+b. Instructions d'installation et de déploiement.
+```
+
+Ordre des étapes de travail :
+1. Analyse des besoins (Fonctionnel)
+1.
+User Stories : Lister toutes les actions possibles pour chaque profil (Visiteur, Lecteur, Auteur, Admin).
+2.
+Use Cases : Détailler le scénario de fonctionnement des fonctionnalités clés (ex: le processus d'upload d'un livre ou le tunnel d'achat/panier).
+3.
+Diagramme d'activité : Visualiser les flux de navigation et les étapes logiques (ex: l'enchaînement des pages lors d'une inscription ou d'une recherche).
+2. Modélisation des données (Données)
+1.
+Dictionnaire de données : Recenser tous les champs nécessaires pour les livres, utilisateurs, catégories, etc.
+2.
+MCD (Modèle Conceptuel de Données) : Définir les relations entre les entités (ex: un Auteur possède des Livres, un Livre appartient à une Catégorie).
+3.
+MLD (Modèle Logique de Données) : Convertir le MCD en schéma relationnel (tables, clés primaires et étrangères) prêt pour la base de données.
+3. Architecture Logicielle (Technique)
+1.
+Diagramme de Classes : Représenter la structure orientée objet de l'application Symfony (les futures Entités, leurs propriétés et leurs méthodes).
+4. Organisation
+1.
+Backlog : Regrouper les User Stories pour créer la feuille de route de développement par priorité.
+En résumé, l'ordre de travail est :
+User Stories → Use Cases → Diagramme d'activité → Dictionnaire de données → MCD → MLD → Diagramme de Classes → Backlog.
+
+
+user_Stories.md
+```md
+| En tant que | Je souhaite | Afin de |
+|---|---|---|
+| **Visiteur** | consulter la liste des livres disponibles | voir les livres qui sont proposés sur le site |
+| **Visiteur** | rechercher un livre par titre, auteur ou catégorie | trouver rapidement un ouvrage spécifique |
+| **Visiteur** | consulter la fiche détaillée d'un livre | avoir accès aux infos (ISBN, résumé, type, etc.) avant de m'inscrire |
+| **Visiteur** | créer un compte (Lecteur ou Auteur) | accéder aux fonctionnalités avancées du site |
+| **Lecteur** | m'authentifier sur le site | accéder à mon espace personnel et mes droits |
+| **Lecteur** | lire un livre texte (.txt, .md) en ligne | consulter le contenu sans forcément le télécharger |
+| **Lecteur** | télécharger un livre (texte ou audio) | pouvoir le consulter hors-ligne |
+| **Lecteur** | ajouter un livre à mon panier de lecture | sauvegarder des livres que je souhaite lire plus tard |
+| **Lecteur** | modifier mes informations personnelles | tenir mon profil à jour |
+| **Auteur** | m'authentifier sur le site | accéder aux outils de gestion de mes œuvres |
+| **Auteur** | téléverser un livre (fichier texte ou archive .zip audio) | partager mes œuvres avec les utilisateurs du site |
+| **Auteur** | modifier ou supprimer un livre que j'ai publié | corriger des erreurs ou retirer un ouvrage |
+| **Auteur** | télécharger et lire des livres | profiter de la bibliothèque comme un lecteur |
+| **Auteur** | modifier mon profil auteur | mettre à jour mes informations personnelles |
+| **Admin** | gérer les utilisateurs (création, modification, suppression) | administrer la communauté du site |
+| **Admin** | gérer les rôles des utilisateurs | attribuer les droits d'accès appropriés |
+| **Admin** | modérer tous les livres (ajout, modification, suppression) | garantir la qualité et la légalité du contenu |
+| **Admin** | gérer les catégories de livres | organiser efficacement la bibliothèque |
+| **Utilisateur API** | interroger le site via une API par titre ou ISBN | récupérer des informations sur un livre programmatiquement |
+```
+
+2.
+Use Cases : Détailler le scénario de fonctionnement des fonctionnalités clés (ex: le processus d'upload d'un livre ou le tunnel d'achat/panier).
+
+useCase.puml
+```puml
+@startuml
+title Diagramme des Cas d'Utilisation - symfoLivre
+
+skinparam packageStyle rectangle
+left to right direction
+
+actor "Visiteur" as Visiteur
+actor "Lecteur" as Lecteur
+actor "Auteur" as Auteur
+actor "Administrateur" as Admin
+actor "Client API" as API_Client
+
+' Héritage des rôles
+Lecteur --|> Visiteur
+Auteur --|> Lecteur
+Admin --|> Lecteur
+
+rectangle "Système symfoLivre" {
+
+    package "Gestion Compte & Auth" {
+        usecase "S'inscrire" as UC_Register
+        usecase "S'authentifier" as UC_Login
+        usecase "Gérer son profil" as UC_Profile
+    }
+
+    package "Consultation" {
+        usecase "Consulter la liste des livres" as UC_ListBooks
+        usecase "Rechercher un livre" as UC_Search
+        usecase "Voir détails d'un livre" as UC_Details
+        usecase "Lire un livre en ligne (.txt/.md)" as UC_ReadOnline
+        usecase "Télécharger un livre" as UC_Download
+        usecase "Gérer son panier de lecture" as UC_Basket
+    }
+
+    package "Contribution (Auteur)" {
+        usecase "Téléverser un livre" as UC_Upload
+        usecase "Modifier/Supprimer ses propres livres" as UC_ManageOwnBooks
+    }
+
+    package "Administration" {
+        usecase "Gérer les utilisateurs & rôles" as UC_ManageUsers
+        usecase "Modérer tous les livres" as UC_ManageAllBooks
+        usecase "Gérer les catégories" as UC_ManageCats
+    }
+
+    package "Interface API" {
+        usecase "Interroger un livre (Titre/ISBN)" as UC_API_Search
+    }
+}
+
+' Liens Visiteur
+Visiteur --> UC_ListBooks
+Visiteur --> UC_Search
+Visiteur --> UC_Details
+Visiteur --> UC_Register
+
+' Liens Lecteur
+Lecteur --> UC_Login
+Lecteur --> UC_ReadOnline
+Lecteur --> UC_Download
+Lecteur --> UC_Basket
+Lecteur --> UC_Profile
+
+' Liens Auteur
+Auteur --> UC_Upload
+Auteur --> UC_ManageOwnBooks
+
+' Liens Admin
+Admin --> UC_ManageUsers
+Admin --> UC_ManageAllBooks
+Admin --> UC_ManageCats
+
+' Liens API
+API_Client --> UC_API_Search
+
+@enduml
+```
+
+3.
+Diagramme d'activité : Visualiser les flux de navigation et les étapes logiques (ex: l'enchaînement des pages lors d'une inscription ou d'une recherche).
+
+activité_Case.md
+```md
+# Compilation des Diagrammes d'activité PlantUML
+
+---
+
+## Source : `Connexion.puml`
+
+```puml
+@startuml --- Module Auth: Connexion ---
+title Processus d'Authentification
+
+|Utilisateur|
+start
+:Saisit Email et Mot de passe;
+:Clique sur "Se connecter";
+
+|Serveur|
+:Reçoit les identifiants;
+|Base de données|
+:Recherche l'utilisateur par email;
+if (Utilisateur trouvé ?) then (Oui)
+    |Serveur|
+    :Vérifie la correspondance du mot de passe haché;
+    if (Mot de passe correct ?) then (Oui)
+        :Génère la session utilisateur;
+        :Récupère les rôles associés;
+        :Redirige vers la page d'accueil / dashboard;
+        |Utilisateur|
+        :Accède à son espace personnel;
+        stop
+    else (Non)
+        :Retourne erreur "Identifiants incorrects";
+        |Utilisateur|
+        :Voit le message d'erreur;
+        stop
+    endif
+else (Non)
+    |Serveur|
+    :Retourne erreur "Identifiants incorrects";
+    |Utilisateur|
+    :Voit le message d'erreur;
+    stop
+endif
+@enduml
+```
+
+---
+
+## Source : `Gestion_Categories.puml`
+
+```puml
+@startuml --- Module Admin: Gestion Catégories ---
+title Gestion des catégories de livres
+
+|Administrateur|
+start
+:Accède à "Gestion des Catégories";
+if (Action == "Créer" ?) then (Oui)
+    :Saisit le nom de la catégorie;
+    :Valide;
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    |Base de données|
+    :Insère la nouvelle catégorie;
+else (Action == "Supprimer" ?)
+    :Sélectionne une catégorie et clique sur "Supprimer";
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    |Base de données|
+    :Supprime la catégorie / Déplace les livres vers "Sans Catégorie";
+endif
+|Serveur|
+:Confirme l'opération;
+|Administrateur|
+:Voit la liste des catégories à jour;
+stop
+@enduml
+```
+
+---
+
+## Source : `gestion_panier.puml`
+
+```puml
+@startuml --- Module Consultation: Panier de lecture ---
+title --- Module Consultation: Gestion du panier de lecture (Ajout et Suppression) ---
+
+|Lecteur/Auteur|
+start
+:Accède à la fiche d'un livre;
+if (Action == "Ajouter au panier" ?) then (Oui)
+    |Serveur|
+    :Vérifie la session;
+    if (Session valide ?) then (Oui)
+        |Base de données|
+        :Vérifie existence du lien [Utilisateur <-> Livre];
+        if (Lien existant ?) then (Non)
+            :Crée l'association dans la table Panier;
+            |Serveur|
+            :Retourne "Ajouté avec succès";
+        else (Oui)
+            |Serveur|
+            :Retourne "Déjà dans le panier";
+        endif
+    else (Non)
+        :Redirige vers connexion;
+    endif
+else (Action == "Supprimer du panier" ?)
+    |Serveur|
+    :Vérifie la session;
+    if (Session valide ?) then (Oui)
+        |Base de données|
+        :Supprime l'association [Utilisateur <-> Livre];
+        |Serveur|
+        :Retourne "Livre retiré du panier";
+    else (Non)
+        :Redirige vers connexion;
+    endif
+endif
+|Lecteur/Auteur|
+:Voit la mise à jour de son panier;
+stop
+@enduml
+```
+
+---
+
+## Source : `Gestion_Utilisateur_et_Rôle.puml`
+
+```puml
+@startuml --- Module Admin: Gestion Utilisateurs & Rôles ---
+title Administration des comptes et rôles
+
+|Administrateur|
+start
+:Accède au panel "Gestion Utilisateurs";
+:Sélectionne un utilisateur;
+if (Action == "Modifier Rôle" ?) then (Oui)
+    :Choisit le nouveau rôle (Lecteur, Auteur ou Admin);
+    :Valide le changement;
+    
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    if (Admin ?) then (Oui)
+        |Base de données|
+        :Met à jour le champ 'roles' de l'utilisateur;
+        |Serveur|
+        :Confirme le changement de rôle;
+    else (Non)
+        :Erreur 403;
+    endif
+else (Action == "Supprimer Utilisateur" ?)
+    :Clique sur "Supprimer";
+    
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    if (Admin ?) then (Oui)
+        |Base de données|
+        :Supprime l'utilisateur et ses liens panier;
+        |Serveur|
+        :Confirme la suppression;
+    else (Non)
+        :Erreur 403;
+    endif
+endif
+|Administrateur|
+:Voit la liste des utilisateurs mise à jour;
+stop
+@enduml
+```
+
+---
+
+## Source : `Inscription.puml`
+
+```puml
+@startuml --- Module Auth: Inscription ---
+title Inscription d'un nouvel utilisateur
+
+|Visiteur|
+start
+:Clique sur "S'inscrire";
+:Choisit le type de compte (Lecteur ou Auteur);
+:Remplit le formulaire (Email, Mot de passe, Nom...);
+:Valide l'inscription;
+
+|Serveur|
+:Reçoit les données d'inscription;
+if (L'email est-il déjà utilisé ?) then (Oui)
+    :Retourne erreur "Email déjà existant";
+    |Visiteur|
+    :Voit le message d'erreur;
+    stop
+else (Non)
+    :Hache le mot de passe (BCrypt/Argon2);
+    :Attribue le rôle correspondant (ROLE_USER / ROLE_AUTEUR);
+    |Base de données|
+    :Enregistre l'utilisateur;
+    |Serveur|
+    :Confirme la création du compte;
+    |Visiteur|
+    :Reçoit la confirmation et est redirigé vers Login;
+    stop
+endif
+@enduml
+```
+
+---
+
+## Source : `Lectur_en_ligne.puml`
+
+```puml
+@startuml --- Module Consultation: Lecture en ligne ---
+title Lecture d'un livre texte (.txt / .md)
+
+|Lecteur/Auteur|
+start
+:Consulte la fiche d'un livre;
+if (Type du livre == "Texte" ?) then (Oui)
+    :Clique sur "Lire en ligne";
+    
+    |Serveur|
+    :Vérifie la session;
+    if (Session valide ?) then (Oui)
+        :Récupère le chemin du fichier .txt ou .md;
+        |Système de Fichiers|
+        :Lit le contenu du fichier;
+        |Serveur|
+        :Injecte le texte dans un template de lecture;
+        :Envoie la page au navigateur;
+        |Lecteur/Auteur|
+        :Lit l'ouvrage sur le site;
+        stop
+    else (Non)
+        :Redirige vers connexion;
+        stop
+    endif
+else (Non)
+    |Lecteur/Auteur|
+    :Le bouton "Lire en ligne" est désactivé;
+    :L'utilisateur doit télécharger le .zip audio;
+    stop
+endif
+@enduml
+```
+
+---
+
+## Source : `Modification.puml`
+
+```puml
+@startuml --- Module Profil: Modification ---
+title Mise à jour du profil utilisateur
+
+|Lecteur/Auteur|
+start
+:Accède à "Mon Profil";
+:Modifie ses informations personnelles;
+:Clique sur "Enregistrer";
+
+|Serveur|
+:Vérifie la session;
+if (Session valide ?) then (Oui)
+    :Valide les données saisies;
+    if (Données valides ?) then (Oui)
+        |Base de données|
+        :Met à jour les informations de l'utilisateur;
+        |Serveur|
+        :Confirme la modification;
+        |Lecteur/Auteur|
+        :Voit le message "Profil mis à jour";
+        stop
+    else (Non)
+        |Serveur|
+        :Retourne erreur de validation;
+        |Lecteur/Auteur|
+        :Corrige les erreurs;
+        stop
+    endif
+else (Non)
+    :Redirige vers connexion;
+    stop
+endif
+@enduml
+```
+
+---
+
+## Source : `Modification_livre.puml`
+
+```puml
+@startuml --- Module Auteur: Modification Livre ---
+title Modification d'un livre par l'auteur
+
+|Auteur|
+start
+:Accède à "Mes Livres";
+:Sélectionne un livre et clique sur "Modifier";
+
+|Serveur|
+:Vérifie la session;
+if (Rôle == ROLE_AUTEUR ?) then (Oui)
+    |Base de données|
+    :Vérifie si l'auteur est le propriétaire du livre;
+    if (Propriétaire ?) then (Oui)
+        |Serveur|
+        :Affiche le formulaire avec les données actuelles;
+        |Auteur|
+        :Modifie les métadonnées ou remplace le fichier;
+        :Valide les modifications;
+        
+        |Serveur|
+        :Valide les nouvelles données/extension fichier;
+        if (Données valides ?) then (Oui)
+            if (Fichier remplacé ?) then (Oui)
+                |Système de Fichiers|
+                :Supprime l'ancien fichier;
+                :Enregistre le nouveau fichier;
+            endif
+            |Base de données|
+            :Met à jour les métadonnées en DB;
+            |Serveur|
+            :Confirme la modification;
+            |Auteur|
+            :Voit le livre mis à jour;
+            stop
+        else (Non)
+            |Serveur|
+            :Retourne erreur de validation;
+            |Auteur|
+            :Corrige les erreurs;
+            stop
+        endif
+    else (Non)
+        |Serveur|
+        :Retourne erreur 403 "Action interdite";
+        stop
+    endif
+else (Non)
+    :Redirige vers connexion;
+    stop
+endif
+@enduml
+```
+
+---
+
+## Source : `Modération_livres.puml`
+
+```puml
+@startuml  --- Module Admin: Modération Livres ---
+title Modération et Suppression d'un livre par l'Admin
+
+|Administrateur|
+start
+:Accède à l'interface de gestion des livres;
+
+|Serveur|
+:Vérifie la session;
+if (Rôle == ROLE_ADMIN ?) then (Oui)
+    :Charge la liste complète des livres;
+    :Envoie la page;
+    |Administrateur|
+    :Sélectionne un livre à supprimer;
+    :Clique sur "Supprimer définitivement";
+
+    |Serveur|
+    :Reçoit la demande de suppression;
+    :Récupère le chemin du fichier associé;
+
+    |Système de Fichiers|
+    :Supprime physiquement le fichier (.txt, .md ou .zip);
+
+    |Base de données|
+    :Supprime l'entrée correspondante dans la table Livres;
+    :Supprime les liens dans le panier de lecture;
+
+    |Serveur|
+    :Confirme la suppression;
+    |Administrateur|
+    :Voit le livre disparaître de la liste;
+    stop
+else (Non)
+    :Retourne erreur 403;
+    |Administrateur|
+    :Voit message "Accès réservé à l'administrateur";
+    stop
+endif
+@enduml
+```
+
+---
+
+## Source : `Recherche_et_téléchargement.puml`
+
+```puml
+@startuml  --- Module Consultation: Recherche et Téléchargement --- 
+title  --- Module Consultation: Recherche et Téléchargement d'un livre ---
+
+|Utilisateur|
+start
+:Saisit un mot-clé dans la barre de recherche;
+:Clique sur "Rechercher";
+
+|Serveur|
+:Reçoit la requête de recherche;
+:Construit la requête SQL (Titre/Auteur/Catégorie);
+
+|Base de données|
+:Exécute la recherche;
+:Retourne la liste des livres correspondants;
+
+|Serveur|
+:Génère la page de résultats;
+:Envoie la page;
+
+|Utilisateur|
+:Consulte la liste;
+:Sélectionne un livre et clique sur "Détails";
+
+|Serveur|
+:Récupère les infos complètes du livre (ISBN, résumé...);
+:Envoie la page de détails;
+
+|Utilisateur|
+:Clique sur "Télécharger le livre";
+
+|Serveur|
+:Vérifie la session utilisateur;
+if (Utilisateur authentifié ?) then (Oui)
+    :Vérifie le chemin du fichier sur le serveur;
+    if (Fichier existant ?) then (Oui)
+        :Prépare le flux de téléchargement (.txt, .md ou .zip);
+        |Utilisateur|
+        :Reçoit et enregistre le fichier;
+        stop
+    else (Non)
+        |Serveur|
+        :Retourne erreur "Fichier introuvable";
+        |Utilisateur|
+        :Voit message d'erreur;
+        stop
+    endif
+else (Non)
+    :Redirige vers la page de connexion;
+    |Utilisateur|
+    :Voit l'invitation à s'inscrire/se connecter;
+    stop
+endif
+@enduml
+```
+
+---
+
+## Source : `Recherche_exhaustive.puml`
+
+```puml
+@startuml --- Module API: Recherche exhaustive ---
+title Flux détaillé de l'API de recherche
+
+|Client API|
+start
+:Envoie requête GET /api/books (paramètre titre ou isbn);
+
+|Serveur|
+:Intercepte la demande via le routeur Symfony;
+:Vérifie si le paramètre est un ISBN (format 13 chiffres) ou un Titre;
+
+if (Paramètre valide ?) then (Oui)
+    |Base de données|
+    :Exécute requête SQL :
+    SELECT * FROM livre WHERE isbn = ? OR titre LIKE ?;
+    :Retourne le résultat;
+    
+    |Serveur|
+    if (Résultat trouvé ?) then (Oui)
+        :Transforme l'entité Livre en format JSON via Serializer;
+        :Envoie réponse HTTP 200 OK + Body JSON;
+    else (Non)
+        :Prépare message "Livre non trouvé";
+        :Envoie réponse HTTP 404 Not Found;
+    endif
+else (Non)
+    |Serveur|
+    :Prépare erreur "Paramètre invalide";
+    :Envoie réponse HTTP 400 Bad Request;
+endif
+
+|Client API|
+:Traite la réponse JSON ou l'erreur;
+stop
+@enduml
+```
+
+---
+
+## Source : `Téléversement_livre.puml`
+
+```puml
+@startuml --- Téléversement Auteur: Ajouter un livre ---
+title Téléversement d'un livre par un Auteur
+
+|Auteur|
+start
+:Accède à la page "Ajouter un livre";
+
+|Serveur|
+:Vérifie la session;
+if (Rôle == ROLE_AUTEUR ou ROLE_ADMIN ?) then (Oui)
+    :Affiche le formulaire de dépôt;
+    |Auteur|
+    :Saisit les métadonnées (Titre, ISBN...);
+    :Sélectionne le fichier (.txt, .md ou .zip);
+    :Valide le formulaire;
+
+    |Serveur|
+    :Reçoit les données et le fichier;
+    :Vérifie l'extension du fichier;
+    if (Extension valide ?) then (Oui)
+        :Génère un nom de fichier unique;
+        :Déplace le fichier vers le stockage serveur;
+        
+        |Base de données|
+        :Enregistre les métadonnées et le chemin du fichier;
+        :Liaise le livre à l'auteur actuel;
+        
+        |Serveur|
+        :Confirme le succès de l'opération;
+        |Auteur|
+        :Voit le message de confirmation;
+        stop
+    else (Non)
+        |Serveur|
+        :Retourne erreur "Format de fichier non supporté";
+        |Auteur|
+        :Voit le message d'erreur;
+        stop
+    endif
+else (Non)
+    :Retourne erreur 403 (Accès refusé);
+    |Auteur|
+    :Voit message "Action interdite";
+    stop
+endif
+@enduml
+```
+
+---
+```
+
+Voici le Dictionnaire de données:
+```md
+# Dictionnaire de Données - symfoLivre
+
+Ce document recense l'ensemble des données manipulées par l'application `symfoLivre`.
+
+## 1. Entité : Utilisateur (`User`)
+L'utilisateur peut être un Lecteur, un Auteur ou un Administrateur.
+
+| Champ | Description | Type | Contraintes | Note |
+|---|---|---|---|---|
+| `id` | Identifiant unique de l'utilisateur | Integer | PK, Auto-increment | |
+| `email` | Adresse email de connexion | String | Unique, Not Null | Utilisé comme login |
+| `password` | Mot de passe haché | String | Not Null | Format BCrypt/Argon2 |
+| `firstname` | Prénom de l'utilisateur | String | Not Null | |
+| `lastname` | Nom de l'utilisateur | String | Not Null | |
+| `roles` | Rôles attribués à l'utilisateur | JSON / Array | Not Null | ex: `ROLE_USER`, `ROLE_AUTEUR`, `ROLE_ADMIN` |
+| `created_at` | Date de création du compte | DateTime | Not Null | |
+| `updated_at` | Date de dernière modification | DateTime | - | |
+
+## 2. Entité : Livre (`Book`)
+Représente un ouvrage numérique (texte ou audio).
+
+| Champ | Description | Type | Contraintes | Note |
+|---|---|---|---|---|
+| `id` | Identifiant unique du livre | Integer | PK, Auto-increment | |
+| `title` | Titre de l'ouvrage | String | Not Null | |
+| `isbn` | Numéro ISBN international | String | Unique, Not Null | Format 13 chiffres |
+| `summary` | Résumé/Description du livre | Text | - | |
+| `publication_date` | Date de publication originale | Date | - | |
+| `type` | Nature du contenu | Enum / String | Not Null | Valeurs : `TEXTE`, `AUDIO` |
+| `file_path` | Chemin vers le fichier sur le serveur | String | Not Null | Ex: `/uploads/books/livre1.md` |
+| `created_at` | Date d'ajout au site | DateTime | Not Null | |
+| `updated_at` | Date de mise à jour | DateTime | - | |
+
+## 3. Entité : Catégorie (`Category`)
+Permet le classement thématique des livres.
+
+| Champ | Description | Type | Contraintes | Note |
+|---|---|---|---|---|
+| `id` | Identifiant unique de la catégorie | Integer | PK, Auto-increment | |
+| `label` | Nom de la catégorie | String | Unique, Not Null | Ex: "Science-Fiction", "Histoire" |
+| `description` | Description courte de la thématique | Text | - | |
+
+## 4. Entité : Panier de lecture (`ReadingBasket`)
+Table d'association entre l'utilisateur et les livres qu'il a sauvegardés.
+
+| Champ | Description | Type | Contraintes | Note |
+|---|---|---|---|---|
+| `id` | Identifiant unique de l'entrée | Integer | PK, Auto-increment | |
+| `user_id` | Référence à l'utilisateur | Integer | FK, Not Null | Lien vers `User.id` |
+| `book_id` | Référence au livre | Integer | FK, Not Null | Lien vers `Book.id` |
+| `added_at` | Date d'ajout au panier | DateTime | Not Null | |
+```
+
+MCD
+```puml
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+
+entity "Utilisateur" as User {
+    * id
+    --
+    email
+    nom
+    prenom
+    roles
+}
+
+entity "Livre" as Book {
+    * id
+    --
+    titre
+    isbn
+    resume
+    type
+    chemin_fichier
+    date_publication
+}
+
+entity "Catégorie" as Category {
+    * id
+    --
+    label
+    description
+}
+
+' Relations
+User "1" -- "0..*" Book : Publie >
+Category "1" -- "0..*" Book : Classe >
+User "0..*" -- "0..*" Book : Ajoute au panier >
+
+@enduml
+```
+
+MLD
+```md
+# Modèle Logique de Données (MLD) - symfoLivre
+
+## 1. Schéma Relationnel (Notation Textuelle)
+
+**users** (id, email, password, firstname, lastname, roles, created_at, updated_at)
+- `id` : PK
+
+**categories** (id, label, description)
+- `id` : PK
+
+**books** (id, title, isbn, summary, publication_date, type, file_path, created_at, updated_at, #author_id, #category_id)
+- `id` : PK
+- `author_id` : FK $\rightarrow$ **users(id)**
+- `category_id` : FK $\rightarrow$ **categories(id)**
+
+**reading_basket** (#user_id, #book_id, added_at)
+- `user_id` : PK, FK $\rightarrow$ **users(id)**
+- `book_id` : PK, FK $\rightarrow$ **books(id)**
+
+---
+
+## 2. Détails Techniques des Tables
+
+### Table : `users`
+| Colonne | Type | Contraintes | Note |
+|---|---|---|---|
+| `id` | INT | PK, AI | Identifiant unique |
+| `email` | VARCHAR(180) | Unique, Not Null | Utilisé pour l'authentification |
+| `password` | VARCHAR(255) | Not Null | Mot de passe haché |
+| `firstname` | VARCHAR(50) | Not Null | |
+| `lastname` | VARCHAR(50) | Not Null | |
+| `roles` | JSON | Not Null | Stockage des rôles (ex: ["ROLE_USER"]) |
+| `created_at` | DATETIME | Not Null | |
+| `updated_at` | DATETIME | - | |
+
+### Table : `categories`
+| Colonne | Type | Contraintes | Note |
+|---|---|---|---|
+| `id` | INT | PK, AI | Identifiant unique |
+| `label` | VARCHAR(100) | Unique, Not Null | Nom de la catégorie |
+| `description` | TEXT | - | Description de la thématique |
+
+### Table : `books`
+| Colonne | Type | Contraintes | Note |
+|---|---|---|---|
+| `id` | INT | PK, AI | Identifiant unique |
+| `title` | VARCHAR(255) | Not Null | |
+| `isbn` | VARCHAR(20) | Unique, Not Null | |
+| `summary` | TEXT | - | |
+| `publication_date` | DATE | - | |
+| `type` | VARCHAR(10) | Not Null | 'TEXTE' ou 'AUDIO' |
+| `file_path` | VARCHAR(255) | Not Null | Chemin vers le fichier serveur |
+| `created_at` | DATETIME | Not Null | |
+| `updated_at` | DATETIME | - | |
+| `author_id` | INT | FK, Not Null | Référence à **users.id** |
+| `category_id` | INT | FK, Not Null | Référence à **categories.id** |
+
+### Table : `reading_basket` (Table Pivot)
+| Colonne | Type | Contraintes | Note |
+|---|---|---|---|
+| `user_id` | INT | PK, FK, Not Null | Référence à **users.id** |
+| `book_id` | INT | PK, FK, Not Null | Référence à **books.id** |
+| `added_at` | DATETIME | Not Null | Date d'ajout au panier |
+```
+
+Diagramme de classes:
+```puml
+@startuml symfoLivre_ClassDiagram
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+
+' ─────────────────────────────────────────────
+'  UTILISATEUR (User)
+' ─────────────────────────────────────────────
+class User {
+  - id : int
+  - email : String
+  - password : String
+  - firstname : String
+  - lastname : String
+  - roles : array
+  - created_at : DateTime
+  - updated_at : DateTime
+  + getId() : int
+  + getEmail() : String
+  + getRoles() : array
+  + getFullName() : String
+  + eraseCredentials() : void
+  + getUserIdentifier() : String
+}
+
+' ─────────────────────────────────────────────
+'  LIVRE (Book)
+' ─────────────────────────────────────────────
+class Book {
+  - id : int
+  - title : String
+  - isbn : String
+  - summary : text
+  - publication_date : Date
+  - type : String
+  - file_path : String
+  - created_at : DateTime
+  - updated_at : DateTime
+  + getId() : int
+  + getTitle() : String
+  + getIsbn() : String
+  + getType() : String
+  + isAudioBook() : boolean
+  + isTextBook() : boolean
+  + getDownloadUrl() : String
+}
+
+' ─────────────────────────────────────────────
+'  CATÉGORIE (Category)
+' ─────────────────────────────────────────────
+class Category {
+  - id : int
+  - label : String
+  - description : text
+  + getId() : int
+  + getLabel() : String
+  + getDescription() : String
+}
+
+' ─────────────────────────────────────────────
+'  PANIER DE LECTURE (ReadingBasket)
+' ─────────────────────────────────────────────
+class ReadingBasket {
+  - id : int
+  - added_at : DateTime
+  + getId() : int
+  + getAddedAt() : DateTime
+  + setAddedAt(date : DateTime) : void
+}
+
+' ─────────────────────────────────────────────
+'  RELATIONS (Associations)
+' ─────────────────────────────────────────────
+
+' Un utilisateur peut être l'auteur de plusieurs livres
+User "1" -- "0..*" Book : publie >
+
+' Un livre appartient à une seule catégorie, et une catégorie a plusieurs livres
+Category "1" -- "0..*" Book : classifie >
+
+' Relation Many-to-Many via la classe d'association ReadingBasket
+User "1" -- "0..*" ReadingBasket : possède >
+Book "1" -- "0..*" ReadingBasket : est ajouté à >
+
+@enduml
+```
+
+backlog.md
+```md
+# Backlog - symfoLivre
+
+Ce backlog priorise les tâches selon la méthode MoSCoW :
+- **Must have (M) :** Indispensable pour le fonctionnement de base.
+- **Should have (S) :** Important mais peut attendre une V1.1.
+- **Could have (C) :** Optionnel, confort pour l'utilisateur.
+- **Won't have (W) :** Pas prévu pour ce cycle.
+
+| Priorité | User Story / Fonctionnalité | Rôle |
+| :--- | :--- | :--- |
+| **M** | Inscription et authentification (Login/Logout) | Tous |
+| **M** | Consulter la liste des livres (Page d'accueil) | Visiteur |
+| **M** | Voir les détails d'un livre | Visiteur |
+| **M** | Recherche de livre (titre, auteur, catégorie) | Visiteur |
+| **M** | Téléchargement de fichiers (.txt, .md, .zip) | Lecteur |
+| **M** | Téléversement de livres (avec validation type) | Auteur |
+| **M** | Gestion des rôles et accès aux routes (Security) | Admin |
+| **M** | CRUD complet sur les Livres et Catégories | Admin |
+| **S** | Lecture en ligne des fichiers texte (.txt/.md) | Lecteur |
+| **S** | Panier de lecture (persistance en base) | Lecteur |
+| **S** | Modification/Suppression de ses propres livres | Auteur |
+| **S** | API de recherche (Endpoint JSON) | API Client |
+| **C** | Pagination et tri des résultats de recherche | Tous |
+| **C** | Profil utilisateur (modification info perso) | Lecteur/Auteur |
+| **C** | Barre de progression de lecture | Lecteur |
+| **W** | Système de commentaires et avis | Lecteur |
+| **W** | Système de recommandation automatique | Lecteur |
+```
