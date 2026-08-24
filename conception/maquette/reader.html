@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture — Dune — symfoLivre</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .reader-toolbar {
+      background: var(--clr-surface);
+      border-bottom: 1px solid var(--clr-border);
+      padding: .8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 64px;
+      z-index: 900;
+    }
+    .reader-toolbar .font-controls { display: flex; gap: .4rem; }
+    .reader-toolbar .font-controls button {
+      background: var(--clr-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: 6px;
+      padding: .3rem .7rem;
+      cursor: pointer;
+      font-size: .9rem;
+    }
+    .progress-bar {
+      height: 4px;
+      background: var(--clr-border);
+      position: relative;
+    }
+    .progress-bar .fill { width: 35%; height: 100%; background: var(--clr-accent); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.9 0-3.7.4-5.25 1.22L12 5.8l.75-1.1C13.3 3.88 15.1 3.5 17 3.5c1.17 0 2.39.15 3.5.5V5zm-9 4.5L6.5 8 3 6v14l6 2 6-2 6 2V6l-3.5 2L12 9.5z"/></svg>
+    symfo<span>Livre</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="book-detail.html">← Fiche du livre</a></li>
+  </ul>
+  <div class="nav-auth">
+    <span class="badge-role">Lecteur</span>
+    <a href="#" onclick="alert('Téléchargement simulé')" class="btn btn-accent btn-sm">⬇ Télécharger</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="fill"></div></div>
+
+<div class="reader-toolbar">
+  <div class="flex" style="gap:1rem;">
+    <strong style="font-family:var(--font-heading);">Dune : La Chute de L'Arrakeen</strong>
+    <span class="text-muted">Chapitre 1 — 35 % lu</span>
+  </div>
+  <div class="font-controls">
+    <button onclick="changeFont(-1)" title="Réduire">A−</button>
+    <button onclick="changeFont(1)" title="Agrandir">A+</button>
+    <button onclick="document.body.style.filter='sepia(.3)'" title="Mode lecture">🌙</button>
+  </div>
+</div>
+
+<main style="padding:3rem 1.5rem;">
+  <div class="reader-content" id="readerContent">
+    <h2 style="margin-bottom:1.5rem;text-align:center;">Chapitre 1</h2>
+    <p style="margin-bottom:1.2rem;">
+      Dans un futur lointain, lorsque l'humanité a colonisé plusieurs centaines de planètes,
+      une seule ressource demeure au sommet de l'économie galactique : l'épice, que les
+      habitants d'Arrakeen appellent simplement « le Kysse ». C'est sur cette planète que
+      parvient la maison Atreides, chargée par l'Empereur Feudal de gérer les sables où
+      naît le Kysse.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      L'Empereur, dans sa sagesse impénétrable, a compris que la seule façon de contrer
+      la toute-puissance des Harkonnen — maîtres actuels d'Arrakeen et dépositaires d'une
+      cruauté sans borne — était de confier la gouvernance du désert à une autre maison
+      noble. Les Atreides, ennemis jurés des Harkonnen, semblaient les plus indiqués.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      Paul Atreides, héritier de la maison, n'a que quinze ans. Il est déjà marqué par
+      la prescience — un don que lui a transmis sa mère, lady Jessica, disciple des
+      Bene Guezer. Il perçoit les embranchements du temps, les possibles futures de
+      l'univers. Ce don le ronge, car il voit aussi sa propre chute, celle de son
+      peuple, et le chemin de sang qui le mène au trône impérial.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      Sur Caladan, la planète verte des Atreides, Paul erre dans les forêts de brume.
+      Sa mère l'attend dans la salle de méditation. « Tu dois te libérer, Paul, »
+      lui a-t-elle dit. « Le passé est une ancre. Regarde devant toi. » Mais le
+      passé refuse de s'évanouir. Le visage de ses amis, le rire de ses sœurs,
+      l'odeur de la pluie sur les feuilles — tout reste gravé.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      « Mère, je crains, » avoue-t-il.
+    </p>
+    <p>
+      Lady Jessica lui prend les mains. « La peur est la petite mort qui conduit à
+      la pensée mortelle, » répond-elle d'une voix calme. « Ce n'est pas la peur
+      elle-même, mais l'immobilité qu'elle engendre, qui détruit. »
+    </p>
+  </div>
+  <div class="text-center mt-3">
+    <span class="text-muted">— Suite en page 2 —</span>
+  </div>
+</main>
+
+<footer class="footer"><p>© 2026 symfoLivre — Prototype</p></footer>
+
+<script>
+let fontSize = 1.1;
+function changeFont(dir) {
+  fontSize += dir * 0.1;
+  document.getElementById('readerContent').style.fontSize = fontSize + 'rem';
+}
+</script>
+</body>
+</html>

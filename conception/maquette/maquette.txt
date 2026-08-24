@@ -1,0 +1,1524 @@
+css/style.css
+```css
+/* ═══════════════════════════════════════════
+   symfoLivre — Charte graphique & Styles
+   ═══════════════════════════════════════════ */
+
+/* ─── Variables ─── */
+:root {
+  --clr-primary: #1a365d;
+  --clr-primary-light: #2c5282;
+  --clr-primary-lighter: #3d6ba3;
+  --clr-accent: #d69e2e;
+  --clr-accent-light: #f6e05e;
+  --clr-bg: #f7fafc;
+  --clr-surface: #ffffff;
+  --clr-text: #2d3748;
+  --clr-text-muted: #718096;
+  --clr-border: #e2e8f0;
+  --clr-success: #38a169;
+  --clr-danger: #e53e3e;
+  --clr-warning: #dd6b20;
+  --clr-info: #3182ce;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05);
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --transition: .2s ease;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--clr-bg); color: var(--clr-text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+a { color: var(--clr-primary-light); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--clr-accent); }
+img { max-width: 100%; }
+ul { list-style: none; }
+button, input, select, textarea { font-family: inherit; font-size: inherit; }
+
+/* ─── Navbar ─── */
+.navbar { background: var(--clr-primary); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-md); }
+.navbar .brand { color: #fff; font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: .5rem; }
+.navbar .brand span { color: var(--clr-accent-light); }
+.navbar nav { display: flex; align-items: center; gap: .25rem; }
+.navbar nav a { color: rgba(255,255,255,.85); padding: .5rem .9rem; border-radius: var(--radius); font-size: .9rem; transition: background var(--transition); }
+.navbar nav a:hover, .navbar nav a.active { background: rgba(255,255,255,.12); color: #fff; }
+.navbar .nav-actions { display: flex; align-items: center; gap: .75rem; }
+.navbar .nav-actions .btn { padding: .4rem .9rem; font-size: .85rem; }
+
+/* ─── Buttons ─── */
+.btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.2rem; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 500; font-size: .9rem; transition: all var(--transition); text-decoration: none; }
+.btn-primary { background: var(--clr-primary); color: #fff; }
+.btn-primary:hover { background: var(--clr-primary-light); color: #fff; }
+.btn-accent { background: var(--clr-accent); color: #fff; }
+.btn-accent:hover { background: #b7791f; color: #fff; }
+.btn-outline { background: transparent; border: 1.5px solid var(--clr-border); color: var(--clr-text); }
+.btn-outline:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+.btn-danger { background: var(--clr-danger); color: #fff; }
+.btn-danger:hover { background: #c53030; }
+.btn-success { background: var(--clr-success); color: #fff; }
+.btn-success:hover { background: #2f855a; }
+.btn-sm { padding: .35rem .75rem; font-size: .8rem; }
+.btn-lg { padding: .75rem 1.5rem; font-size: 1rem; }
+
+/* ─── Layout ─── */
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; flex: 1; }
+.page-header { text-align: center; margin-bottom: 2rem; }
+.page-header h1 { font-size: 2rem; color: var(--clr-primary); margin-bottom: .5rem; }
+.page-header p { color: var(--clr-text-muted); font-size: 1rem; }
+
+/* ─── Hero ─── */
+.hero { background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%); color: #fff; text-align: center; padding: 3.5rem 2rem; }
+.hero h1 { font-size: 2.4rem; margin-bottom: .75rem; }
+.hero h1 span { color: var(--clr-accent-light); }
+.hero p { font-size: 1.1rem; opacity: .9; max-width: 600px; margin: 0 auto 1.5rem; }
+
+/* ─── Search ─── */
+.search-bar { display: flex; max-width: 600px; margin: 0 auto; gap: 0; }
+.search-bar input { flex: 1; padding: .75rem 1.2rem; border: none; border-radius: var(--radius) 0 0 var(--radius); font-size: .95rem; outline: none; }
+.search-bar button { padding: .75rem 1.4rem; background: var(--clr-accent); color: #fff; border: none; border-radius: 0 var(--radius) var(--radius) 0; cursor: pointer; font-weight: 600; }
+.search-bar button:hover { background: #b7791f; }
+
+/* ─── Filters ─── */
+.filters { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1.5rem 0; justify-content: center; }
+.filter-chip { padding: .4rem 1rem; border-radius: 20px; background: var(--clr-surface); border: 1.5px solid var(--clr-border); font-size: .85rem; cursor: pointer; transition: all var(--transition); }
+.filter-chip:hover, .filter-chip.active { background: var(--clr-primary); color: #fff; border-color: var(--clr-primary); }
+
+/* ─── Book Grid ─── */
+.book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+.book-card { background: var(--clr-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; transition: transform var(--transition), box-shadow var(--transition); display: flex; flex-direction: column; }
+.book-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.book-card .cover { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; }
+.book-card .cover .badge { position: absolute; top: .75rem; right: .75rem; padding: .25rem .6rem; border-radius: 4px; font-size: .7rem; font-weight: 700; text-transform: uppercase; color: #fff; }
+.badge-texte { background: var(--clr-success); }
+.badge-audio { background: var(--clr-warning); }
+.book-card .info { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+.book-card .info h3 { font-size: 1.05rem; color: var(--clr-primary); margin-bottom: .25rem; }
+.book-card .info .author { color: var(--clr-text-muted); font-size: .85rem; margin-bottom: .5rem; }
+.book-card .info .meta { display: flex; gap: .75rem; font-size: .8rem; color: var(--clr-text-muted); margin-bottom: .75rem; }
+.book-card .info .category { color: var(--clr-accent); font-weight: 600; font-size: .8rem; }
+.book-card .actions { padding: 0 1.25rem 1.25rem; display: flex; gap: .5rem; }
+
+/* ─── Book Detail ─── */
+.detail-layout { display: grid; grid-template-columns: 320px 1fr; gap: 2.5rem; align-items: start; }
+.detail-cover { background: var(--clr-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 2rem; text-align: center; }
+.detail-cover .icon { font-size: 5rem; margin-bottom: 1rem; }
+.detail-cover .book-title { font-size: 1.2rem; font-weight: 700; color: var(--clr-primary); }
+.detail-cover .book-author { color: var(--clr-text-muted); margin-top: .25rem; }
+.detail-info h1 { font-size: 1.8rem; color: var(--clr-primary); margin-bottom: .5rem; }
+.detail-info .subtitle { color: var(--clr-text-muted); margin-bottom: 1.5rem; }
+.detail-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.detail-meta .field { background: var(--clr-surface); padding: .75rem 1rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+.detail-meta .field label { font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; color: var(--clr-text-muted); display: block; margin-bottom: .2rem; }
+.detail-meta .field span { font-weight: 600; color: var(--clr-text); }
+.detail-summary { background: var(--clr-surface); padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow); margin-bottom: 1.5rem; line-height: 1.8; }
+.detail-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+/* ─── Forms ─── */
+.form-card { background: var(--clr-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 2rem; max-width: 480px; margin: 0 auto; }
+.form-card h2 { text-align: center; color: var(--clr-primary); margin-bottom: 1.5rem; font-size: 1.4rem; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-weight: 500; font-size: .9rem; margin-bottom: .35rem; color: var(--clr-text); }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: .65rem .9rem; border: 1.5px solid var(--clr-border); border-radius: var(--radius); font-size: .9rem; transition: border-color var(--transition); outline: none; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--clr-primary-light); }
+.form-group textarea { min-height: 100px; resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-footer { text-align: center; margin-top: 1.5rem; font-size: .85rem; color: var(--clr-text-muted); }
+.form-footer a { font-weight: 600; }
+
+/* ─── Radio Role Select ─── */
+.role-select { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.25rem; }
+.role-option { padding: 1rem; border: 2px solid var(--clr-border); border-radius: var(--radius); text-align: center; cursor: pointer; transition: all var(--transition); }
+.role-option:hover { border-color: var(--clr-primary-light); }
+.role-option.selected { border-color: var(--clr-accent); background: #fffaf0; }
+.role-option .icon { font-size: 1.8rem; margin-bottom: .3rem; }
+.role-option .label { font-weight: 600; font-size: .9rem; }
+.role-option .desc { font-size: .75rem; color: var(--clr-text-muted); }
+
+/* ─── Table ─── */
+.table-wrapper { background: var(--clr-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; }
+table { width: 100%; border-collapse: collapse; }
+thead { background: var(--clr-primary); color: #fff; }
+th, td { padding: .85rem 1.25rem; text-align: left; font-size: .9rem; }
+tbody tr { border-bottom: 1px solid var(--clr-border); }
+tbody tr:hover { background: #f0f5ff; }
+td .badge-role { padding: .2rem .6rem; border-radius: 4px; font-size: .75rem; font-weight: 600; color: #fff; }
+.role-lecteur { background: var(--clr-info); }
+.role-auteur { background: var(--clr-accent); }
+.role-admin { background: var(--clr-danger); }
+
+/* ─── Tabs ─── */
+.tabs { display: flex; gap: 0; border-bottom: 2px solid var(--clr-border); margin-bottom: 1.5rem; }
+.tab { padding: .75rem 1.5rem; cursor: pointer; font-weight: 500; font-size: .9rem; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all var(--transition); color: var(--clr-text-muted); }
+.tab:hover { color: var(--clr-primary); }
+.tab.active { color: var(--clr-primary); border-bottom-color: var(--clr-accent); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ─── Stats Cards ─── */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.stat-card { background: var(--clr-surface); padding: 1.25rem; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center; }
+.stat-card .number { font-size: 2rem; font-weight: 700; color: var(--clr-primary); }
+.stat-card .label { font-size: .8rem; color: var(--clr-text-muted); text-transform: uppercase; letter-spacing: .5px; }
+
+/* ─── Toast / Alerts ─── */
+.alert { padding: .85rem 1.25rem; border-radius: var(--radius); margin-bottom: 1rem; font-size: .9rem; }
+.alert-success { background: #f0fff4; border: 1px solid #c6f6d5; color: #22543d; }
+.alert-error { background: #fff5f5; border: 1px solid #fed7d7; color: #c53030; }
+.alert-info { background: #ebf8ff; border: 1px solid #bee3f8; color: #2a4365; }
+
+/* ─── Footer ─── */
+.footer { background: var(--clr-primary); color: rgba(255,255,255,.7); text-align: center; padding: 1.25rem 2rem; font-size: .85rem; margin-top: auto; }
+.footer a { color: var(--clr-accent-light); }
+
+/* ─── Reading View ─── */
+.reading-view { max-width: 720px; margin: 0 auto; padding: 2rem; }
+.reading-view .page-header { margin-bottom: 1.5rem; }
+.reading-view .content { background: var(--clr-surface); padding: 2.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow); line-height: 1.9; font-size: 1.05rem; }
+.reading-view .content p { margin-bottom: 1rem; }
+
+/* ─── Upload Dropzone ─── */
+.dropzone { border: 2px dashed var(--clr-border); border-radius: var(--radius-lg); padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all var(--transition); margin-bottom: 1.5rem; }
+.dropzone:hover, .dropzone.dragover { border-color: var(--clr-primary-light); background: #f0f5ff; }
+.dropzone .icon { font-size: 3rem; margin-bottom: .75rem; }
+.dropzone p { color: var(--clr-text-muted); font-size: .9rem; }
+.dropzone .formats { font-size: .8rem; color: var(--clr-text-muted); margin-top: .5rem; }
+
+/* ─── API Code Block ─── */
+.code-block { background: #1a202c; color: #e2e8f0; padding: 1.25rem 1.5rem; border-radius: var(--radius); font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: .85rem; overflow-x: auto; margin: 1rem 0; white-space: pre; }
+.code-block .method { color: #68d391; font-weight: 700; }
+.code-block .url { color: #63b3ed; }
+.code-block .param { color: #f6ad55; }
+.code-block .comment { color: #718096; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .navbar { padding: 0 1rem; flex-wrap: wrap; height: auto; }
+  .navbar nav { display: none; }
+  .container { padding: 1.25rem; }
+  .detail-layout { grid-template-columns: 1fr; }
+  .detail-meta { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .book-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 1.7rem; }
+}
+
+/* ─── Utilities ─── */
+.text-center { text-align: center; }
+.mt-1 { margin-top: .5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mb-1 { margin-bottom: .5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.gap-1 { gap: .5rem; }
+.gap-2 { gap: 1rem; }
+.hidden { display: none; }
+.text-muted { color: var(--clr-text-muted); }
+.text-sm { font-size: .85rem; }
+.font-weight-600 { font-weight: 600; }
+```
+
+js/app.js
+```js
+/* ═══════════════════════════════════════════
+   symfoLivre — Logique du prototype
+   ═══════════════════════════════════════════ */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ─── NAVBAR: activer le lien courant ───
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.navbar nav a').forEach(a => {
+    if (a.getAttribute('href') === currentPage) a.classList.add('active');
+  });
+
+  // ─── HOMEPAGE: render books ───
+  const grid = document.getElementById('book-grid');
+  if (grid) {
+    renderBooks(BOOKS, grid);
+  }
+
+  // ─── SEARCH ───
+  const searchInput = document.getElementById('search-input');
+  const searchBtn = document.getElementById('search-btn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', doSearch);
+    searchInput?.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+  }
+
+  // ─── FILTER CHIPS ───
+  document.querySelectorAll('.filter-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const cat = chip.dataset.category;
+      const filtered = cat === 'Tous' ? BOOKS : BOOKS.filter(b => b.category === cat);
+      renderBooks(filtered, grid);
+    });
+  });
+
+  // ─── BOOK DETAIL PAGE ───
+  const detailEl = document.getElementById('book-detail');
+  if (detailEl) {
+    renderDetail();
+  }
+
+  // ─── BASKET PAGE ───
+  const basketGrid = document.getElementById('basket-grid');
+  if (basketGrid) {
+    const basketBooks = BOOKS.filter(b => BASKET_DEMO.includes(b.id));
+    renderBooks(basketBooks, basketGrid, true);
+  }
+
+  // ─── MY BOOKS (Auteur) ───
+  const myBooksGrid = document.getElementById('my-books-grid');
+  if (myBooksGrid) {
+    const myBooks = BOOKS.filter(b => b.author === 'Bob Dupont' || true); // démo
+    renderBooks(myBooks.slice(0, 2), myBooksGrid);
+  }
+
+  // ─── ADMIN TABS ───
+  initTabs();
+
+  // ─── UPLOAD DROPZONE ───
+  const dropzone = document.querySelector('.dropzone');
+  if (dropzone) {
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        dropzone.querySelector('.filename').textContent = file.name;
+        dropzone.classList.add('has-file');
+      }
+    });
+  }
+
+  // ─── ROLE SELECT (Register) ───
+  document.querySelectorAll('.role-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+
+  // ─── TOAST helper ───
+  window.showToast = function (msg, type = 'success') {
+    const t = document.createElement('div');
+    t.className = `alert alert-${type}`;
+    t.textContent = msg;
+    document.body.prepend(t);
+    setTimeout(() => t.remove(), 3500);
+  };
+
+});
+
+/* ─── Helpers ─── */
+
+function renderBooks(books, container, isBasket = false) {
+  container.innerHTML = books.map(b => `
+    <div class="book-card">
+      <div class="cover" style="background:${b.color}">
+        <span>${b.icon}</span>
+        <span class="badge ${b.type === 'TEXTE' ? 'badge-texte' : 'badge-audio'}">${b.type === 'TEXTE' ? '📄 Texte' : '🎵 Audio'}</span>
+      </div>
+      <div class="info">
+        <span class="category">${b.category}</span>
+        <h3>${b.title}</h3>
+        <p class="author">${b.author}</p>
+        <div class="meta">
+          <span>📅 ${b.year}</span>
+          <span>ISBN ${b.isbn.slice(0, 10)}…</span>
+        </div>
+      </div>
+      <div class="actions">
+        <a href="book.html?id=${b.id}" class="btn btn-primary btn-sm">Détails</a>
+        ${b.type === 'TEXTE'
+          ? `<a href="book.html?id=${b.id}&read=1" class="btn btn-outline btn-sm">📖 Lire</a>`
+          : `<button class="btn btn-outline btn-sm" onclick="showToast('Téléchargement de ${b.title}…', 'info')">⬇ Télécharger</button>`
+        }
+        ${isBasket
+          ? `<button class="btn btn-danger btn-sm" onclick="this.closest('.book-card').remove(); showToast('Retiré du panier')">✕</button>`
+          : `<button class="btn btn-accent btn-sm" onclick="showToast('${b.title} ajouté au panier')">🛒</button>`
+        }
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDetail() {
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const book = BOOKS.find(b => b.id === id) || BOOKS[0];
+  const isRead = params.get('read') === '1';
+
+  const container = document.getElementById('book-detail');
+  container.innerHTML = `
+    <div class="detail-layout">
+      <div class="detail-cover">
+        <div class="icon">${book.icon}</div>
+        <div class="book-title">${book.title}</div>
+        <div class="book-author">${book.author}</div>
+        <br>
+        <span class="badge ${book.type === 'TEXTE' ? 'badge-texte' : 'badge-audio'}" style="display:inline-block;padding:.3rem .8rem;font-size:.8rem;">
+          ${book.type === 'TEXTE' ? '📄 Livre texte' : '🎵 Livre audio'}
+        </span>
+      </div>
+      <div class="detail-info">
+        <h1>${book.title}</h1>
+        <p class="subtitle">par <strong>${book.author}</strong></p>
+
+        <div class="detail-meta">
+          <div class="field"><label>Catégorie</label><span>${book.category}</span></div>
+          <div class="field"><label>ISBN</label><span>${book.isbn}</span></div>
+          <div class="field"><label>Date de publication</label><span>${book.year}</span></div>
+          <div class="field"><label>Format</label><span>${book.fileFormat === '.txt' ? 'Texte (.txt)' : book.fileFormat === '.md' ? 'Markdown (.md)' : 'Audio (.zip)'}</span></div>
+        </div>
+
+        <div class="detail-summary">
+          <h3 class="mb-2">Résumé</h3>
+          <p>${book.summary}</p>
+        </div>
+
+        ${isRead && book.type === 'TEXTE' ? renderReadingView(book) : ''}
+
+        <div class="detail-actions">
+          ${book.type === 'TEXTE'
+            ? `<button class="btn btn-primary btn-lg" onclick="window.location.href='book.html?id=${book.id}&read=1'">📖 Lire en ligne</button>`
+            : ''
+          }
+          <button class="btn btn-accent btn-lg" onclick="showToast('Téléchargement de «${book.title}» démarré…')">⬇ Télécharger</button>
+          <button class="btn btn-outline btn-lg" onclick="showToast('${book.title} ajouté au panier de lecture')">🛒 Ajouter au panier</button>
+          <a href="index.html" class="btn btn-outline btn-lg">← Retour</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderReadingView(book) {
+  return `
+    <div class="detail-summary" style="margin-top:1.5rem;">
+      <h3 class="mb-2">Aperçu du contenu (démo)</h3>
+      <p>${book.summary}</p>
+      <p class="text-muted text-sm mt-2">— Extraits du chapitre 1 —</p>
+      <p>« ${book.title} » illustre avec une force narrative remarquable les tensions qui traversent la société de son époque. L'auteur ${book.author} y déploie une réflexion profonde, ancrée dans le concret, qui continue de résonner de nos jours.</p>
+      <p>Les personnages, tour à tour lumineux et tourmentés, incarnent les aspirations et les doutes d'une humanité en perpétuelle recherche de sens.</p>
+    </div>
+  `;
+}
+
+function doSearch() {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) { renderBooks(BOOKS, grid); return; }
+  const results = BOOKS.filter(b =>
+    b.title.toLowerCase().includes(q) ||
+    b.author.toLowerCase().includes(q) ||
+    b.category.toLowerCase().includes(q) ||
+    b.isbn.includes(q)
+  );
+  renderBooks(results, grid);
+  if (results.length === 0) {
+    grid.innerHTML = '<p class="text-center text-muted" style="grid-column:1/-1;padding:2rem;">Aucun livre trouvé pour « ' + q + ' »</p>';
+  }
+}
+
+function initTabs() {
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab)?.classList.add('active');
+    });
+  });
+}
+```
+
+js/data.js
+```js
+/* ═══════════════════════════════════════════
+   symfoLivre — Données de démonstration
+   ═══════════════════════════════════════════ */
+
+const BOOKS = [
+  {
+    id: 1,
+    title: "Les Misérables",
+    author: "Victor Hugo",
+    isbn: "978-2253000330",
+    category: "Roman",
+    year: 1862,
+    type: "TEXTE",
+    fileFormat: ".txt",
+    summary: "L'histoire de Jean Valjean, un ancien condamné des travaux forcés qui, après sa libération, lutte contre l'injustice sociale et cherche à se racheter. Roman magistral de la misère humaine, de la rédemption et de la lutte pour la justice, publié en 1862.",
+    color: "#8B4513",
+    icon: "📖"
+  },
+  {
+    id: 2,
+    title: "Le Gène égoïste",
+    author: "Richard Dawkins",
+    isbn: "978-2701126361",
+    category: "Biologie",
+    year: 1976,
+    type: "TEXTE",
+    fileFormat: ".md",
+    summary: "Ouvre les portes de la biologie évolutive en proposant une vision centrée sur le gène comme unité fondamentale de la sélection naturelle. Dawkins démontre comment les gènes 'égoïstes' façonnent le comportement des organismes, la coopération, la méfiance et la culture humaine.",
+    color: "#2D5016",
+    icon: "🧬"
+  },
+  {
+    id: 3,
+    title: "La Cité des permutants",
+    author: "Greg Egan",
+    isbn: "978-2754800606",
+    category: "Science-Fiction",
+    year: 1994,
+    type: "AUDIO",
+    fileFormat: ".zip",
+    summary: "Dans un univers où la physique quantique autorise la duplication et le repliement de l'espace-temps, un scientifique mène une enquête vertigineuse sur la nature de la réalité. Roman d'hard SF primé, une plongée intellectuelle au cœur des paradoxes de la physique moderne.",
+    color: "#1a1a4e",
+    icon: "🎧"
+  },
+  {
+    id: 4,
+    title: "Évolution",
+    author: "Stephen Baxter",
+    isbn: "978-2266197285",
+    category: "Science-Fiction",
+    year: 2002,
+    type: "AUDIO",
+    fileFormat: ".zip",
+    summary: "Dans un futur où l'humanité a colonisé la Voie lactée, une équipe d'explorateurs découvre une race alien d'intelligence supérieure. Baxter propose une réflexion puissante sur la survie des espèces face à l'extinction et la conquête interstellaire.",
+    color: "#2c1810",
+    icon: "🎧"
+  }
+];
+
+const CATEGORIES = ["Tous", "Roman", "Biologie", "Science-Fiction"];
+
+const USERS_DEMO = [
+  { id: 1, name: "Alice Martin", email: "alice@exemple.fr", role: "Admin", books: 0 },
+  { id: 2, name: "Bob Dupont", email: "bob@exemple.fr", role: "Auteur", books: 2 },
+  { id: 3, name: "Claire Petit", email: "claire@exemple.fr", role: "Lecteur", books: 0 },
+  { id: 4, name: "David Leroy", email: "david@exemple.fr", role: "Lecteur", books: 0 },
+];
+
+// Baskets démo
+const BASKET_DEMO = [1, 3]; // IDs des livres dans le panier
+```
+
+admin.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="admin.html" class="active">Admin</a>
+      <a href="api.html">API</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">🛡️ Alice (Admin)</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>🛡️ Administration</h1>
+      <p>Gestion des utilisateurs, livres et catégories</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="number">4</div><div class="label">Livres</div></div>
+      <div class="stat-card"><div class="number">4</div><div class="label">Utilisateurs</div></div>
+      <div class="stat-card"><div class="number">3</div><div class="label">Catégories</div></div>
+      <div class="stat-card"><div class="number">2</div><div class="label">Paniers actifs</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="tab-users">👥 Utilisateurs</div>
+      <div class="tab" data-tab="tab-books">📚 Livres</div>
+      <div class="tab" data-tab="tab-cats">🏷️ Catégories</div>
+    </div>
+
+    <!-- ══ TAB : UTILISATEURS ══ -->
+    <div class="tab-content active" id="tab-users">
+      <div class="flex-between mb-2">
+        <h2 class="text-sm font-weight-600 text-muted">LISTE DES UTILISATEURS</h2>
+        <button class="btn btn-primary btn-sm" onclick="showToast('Formulaire de création (à implémenter en Symfony)')">+ Nouvel utilisateur</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Nom</th><th>Email</th><th>Rôle</th><th>Livres</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="users-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ TAB : LIVRES ══ -->
+    <div class="tab-content" id="tab-books">
+      <div class="flex-between mb-2">
+        <h2 class="text-sm font-weight-600 text-muted">TOUS LES LIVRES</h2>
+        <a href="upload.html" class="btn btn-accent btn-sm">+ Ajouter un livre</a>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Titre</th><th>Auteur</th><th>Catégorie</th><th>Type</th><th>Année</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="books-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ TAB : CATÉGORIES ══ -->
+    <div class="tab-content" id="tab-cats">
+      <div class="flex-between mb-2">
+        <h2 class="text-sm font-weight-600 text-muted">CATÉGORIES DE LIVRES</h2>
+        <button class="btn btn-primary btn-sm" onclick="showToast('Nouvelle catégorie créée (démo)')">+ Nouvelle catégorie</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Libellé</th><th>Description</th><th>Nb livres</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="cats-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script>
+    // ─── Rendu des tables admin ───
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Utilisateurs
+      const uTbody = document.getElementById('users-tbody');
+      uTbody.innerHTML = USERS_DEMO.map(u => {
+        const roleClass = u.role === 'Admin' ? 'role-admin' : u.role === 'Auteur' ? 'role-auteur' : 'role-lecteur';
+        return `<tr>
+          <td>${u.id}</td>
+          <td class="font-weight-600">${u.name}</td>
+          <td>${u.email}</td>
+          <td><span class="badge-role ${roleClass}">${u.role}</span></td>
+          <td>${u.books}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Édition de ${u.name} (démo)')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="showToast('${u.name} supprimé (démo)','error')">🗑️</button>
+          </td>
+        </tr>`;
+      }).join('');
+
+      // Livres
+      const bTbody = document.getElementById('books-tbody');
+      bTbody.innerHTML = BOOKS.map(b => `
+        <tr>
+          <td class="font-weight-600">${b.title}</td>
+          <td>${b.author}</td>
+          <td>${b.category}</td>
+          <td>${b.type === 'TEXTE' ? '📄 Texte' : '🎵 Audio'}</td>
+          <td>${b.year}</td>
+          <td>
+            <a href="book.html?id=${b.id}" class="btn btn-outline btn-sm">👁️</a>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Édition de «${b.title}» (démo)')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="showToast('«${b.title}» supprimé (démo)','error')">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Catégories
+      const cTbody = document.getElementById('cats-tbody');
+      const catData = [
+        { id: 1, label: 'Roman', desc: 'Romans, nouvelles, récits littéraires', count: 1 },
+        { id: 2, label: 'Biologie', desc: 'Sciences du vivant, génétique, évolution', count: 1 },
+        { id: 3, label: 'Science-Fiction', desc: 'SF, uchronie, hard SF, space opera', count: 2 },
+      ];
+      cTbody.innerHTML = catData.map(c => `
+        <tr>
+          <td>${c.id}</td>
+          <td class="font-weight-600">${c.label}</td>
+          <td class="text-muted">${c.desc}</td>
+          <td>${c.count}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Édition de «${c.label}» (démo)')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="showToast('Catégorie «${c.label}» supprimée (démo)','error')">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+
+      // ─── Tabs ───
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
+basket.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panier de lecture — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html" class="active">Panier</a>
+      <a href="my-books.html">Mes livres</a>
+      <a href="profile.html">Profil</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">👤 Claire</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>🛒 Panier de lecture</h1>
+      <p>Les livres que vous avez sauvegardés pour plus tard</p>
+    </div>
+
+    <div class="flex-between mb-3">
+      <span class="text-muted">2 livres dans votre panier</span>
+      <a href="index.html" class="btn btn-outline btn-sm">+ Ajouter des livres</a>
+    </div>
+
+    <div class="book-grid" id="basket-grid">
+      <!-- Rendu par JS -->
+    </div>
+
+    <div class="alert alert-info mt-4">
+      💡 Les livres du panier sont accessibles uniquement depuis votre compte. Vous pouvez les lire en ligne ou les télécharger à tout moment.
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+book.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détail livre — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html">Mes livres</a>
+      <a href="api.html">API</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);">Se connecter</a>
+      <a href="register.html" class="btn btn-accent btn-sm">S'inscrire</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>Fiche du livre</h1>
+      <p>Informations complètes et actions disponibles</p>
+    </div>
+    <div id="book-detail">
+      <!-- Rendu par JS -->
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+index.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>symfoLivre — Bibliothèque numérique</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html">Mes livres</a>
+      <a href="api.html">API</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);">Se connecter</a>
+      <a href="register.html" class="btn btn-accent btn-sm">S'inscrire</a>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <h1>Votre bibliothèque <span>numérique</span></h1>
+    <p>Lisez, téléchargez et partagez des ouvrages en format texte ou audio. Explorez notre collection.</p>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Rechercher par titre, auteur, ISBN ou catégorie…">
+      <button id="search-btn">Rechercher</button>
+    </div>
+  </section>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="container">
+
+    <!-- Filtres par catégorie -->
+    <div class="filters">
+      <span class="filter-chip active" data-category="Tous">📚 Tous</span>
+      <span class="filter-chip" data-category="Roman">📖 Roman</span>
+      <span class="filter-chip" data-category="Biologie">🧬 Biologie</span>
+      <span class="filter-chip" data-category="Science-Fiction">🚀 Science-Fiction</span>
+    </div>
+
+    <!-- Grille de livres -->
+    <div class="book-grid" id="book-grid">
+      <!-- Rendu par JS -->
+    </div>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Bibliothèque numérique en Symfony · Prototype de maquettage</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+login.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Se connecter — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="api.html">API</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="register.html" class="btn btn-accent btn-sm">S'inscrire</a>
+    </div>
+  </header>
+
+  <main class="container" style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
+
+    <div class="form-card" style="width:100%;max-width:440px;">
+      <h2>🔐 Se connecter</h2>
+      <p class="text-center text-muted text-sm mb-3">Accédez à votre espace symfoLivre</p>
+
+      <div class="form-group">
+        <label for="email">Adresse email</label>
+        <input type="email" id="email" placeholder="vous@exemple.fr" value="claire@exemple.fr">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" placeholder="••••••••" value="password123">
+      </div>
+
+      <div class="form-group" style="display:flex;justify-content:space-between;align-items:center;">
+        <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;">
+          <input type="checkbox" checked> Se souvenir de moi
+        </label>
+        <a href="#" class="text-sm">Mot de passe oublié ?</a>
+      </div>
+
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" onclick="showToast('Connexion réussie ! Redirection…'); setTimeout(()=>window.location.href='index.html', 1200);">
+        Se connecter →
+      </button>
+
+      <div class="form-footer">
+        Pas encore de compte ? <a href="register.html">Créer un compte</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+my-books.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes livres — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html" class="active">Mes livres</a>
+      <a href="upload.html">+ Ajouter</a>
+      <a href="profile.html">Profil</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">✍️ Bob (Auteur)</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>📚 Mes publications</h1>
+      <p>Gérez les livres que vous avez publiés</p>
+    </div>
+
+    <div class="flex-between mb-3">
+      <span class="text-muted">2 livres publiés</span>
+      <a href="upload.html" class="btn btn-accent btn-sm">+ Nouveau livre</a>
+    </div>
+
+    <div class="book-grid" id="my-books-grid">
+      <!-- Rendu par JS (simule les livres de l'auteur Bob) -->
+    </div>
+
+    <div class="alert alert-info mt-4">
+      💡 En tant qu'auteur, vous pouvez modifier ou supprimer vos propres livres. Un administrateur conserve un accès total.
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+profile.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon profil — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html">Mes livres</a>
+      <a href="profile.html" class="active">Profil</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">👤 Claire</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>👤 Mon profil</h1>
+      <p>Gérez vos informations personnelles et vos préférences</p>
+    </div>
+
+    <div style="max-width:600px;margin:0 auto;">
+
+      <!-- Résumé -->
+      <div class="form-card" style="max-width:100%;margin-bottom:1.5rem;">
+        <div class="flex gap-2 mb-2" style="align-items:center;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--clr-primary);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;">CD</div>
+          <div>
+            <h3 class="font-weight-600">Claire Petit</h3>
+            <span class="text-muted text-sm">claire@exemple.fr · Rôle : Lecteur</span>
+          </div>
+        </div>
+        <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:0;">
+          <div class="stat-card"><div class="number">2</div><div class="label">Livres lus</div></div>
+          <div class="stat-card"><div class="number">1</div><div class="label">En lecture</div></div>
+          <div class="stat-card"><div class="number">0</div><div class="label">Téléchargés</div></div>
+        </div>
+      </div>
+
+      <!-- Formulaire édition -->
+      <div class="form-card" style="max-width:100%;">
+        <h2>✏️ Modifier mes informations</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" value="Claire">
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" value="Petit">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" value="claire@exemple.fr">
+        </div>
+
+        <div class="form-group">
+          <label>Nouveau mot de passe <span class="text-muted text-sm">(laisser vide pour ne pas changer)</span></label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <div class="form-group">
+          <label>Confirmer le mot de passe</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="showToast('Profil mis à jour avec succès !')">
+          💾 Enregistrer les modifications
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+reader.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture — Dune — symfoLivre</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .reader-toolbar {
+      background: var(--clr-surface);
+      border-bottom: 1px solid var(--clr-border);
+      padding: .8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 64px;
+      z-index: 900;
+    }
+    .reader-toolbar .font-controls { display: flex; gap: .4rem; }
+    .reader-toolbar .font-controls button {
+      background: var(--clr-bg);
+      border: 1px solid var(--clr-border);
+      border-radius: 6px;
+      padding: .3rem .7rem;
+      cursor: pointer;
+      font-size: .9rem;
+    }
+    .progress-bar {
+      height: 4px;
+      background: var(--clr-border);
+      position: relative;
+    }
+    .progress-bar .fill { width: 35%; height: 100%; background: var(--clr-accent); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.9 0-3.7.4-5.25 1.22L12 5.8l.75-1.1C13.3 3.88 15.1 3.5 17 3.5c1.17 0 2.39.15 3.5.5V5zm-9 4.5L6.5 8 3 6v14l6 2 6-2 6 2V6l-3.5 2L12 9.5z"/></svg>
+    symfo<span>Livre</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="book-detail.html">← Fiche du livre</a></li>
+  </ul>
+  <div class="nav-auth">
+    <span class="badge-role">Lecteur</span>
+    <a href="#" onclick="alert('Téléchargement simulé')" class="btn btn-accent btn-sm">⬇ Télécharger</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="fill"></div></div>
+
+<div class="reader-toolbar">
+  <div class="flex" style="gap:1rem;">
+    <strong style="font-family:var(--font-heading);">Dune : La Chute de L'Arrakeen</strong>
+    <span class="text-muted">Chapitre 1 — 35 % lu</span>
+  </div>
+  <div class="font-controls">
+    <button onclick="changeFont(-1)" title="Réduire">A−</button>
+    <button onclick="changeFont(1)" title="Agrandir">A+</button>
+    <button onclick="document.body.style.filter='sepia(.3)'" title="Mode lecture">🌙</button>
+  </div>
+</div>
+
+<main style="padding:3rem 1.5rem;">
+  <div class="reader-content" id="readerContent">
+    <h2 style="margin-bottom:1.5rem;text-align:center;">Chapitre 1</h2>
+    <p style="margin-bottom:1.2rem;">
+      Dans un futur lointain, lorsque l'humanité a colonisé plusieurs centaines de planètes,
+      une seule ressource demeure au sommet de l'économie galactique : l'épice, que les
+      habitants d'Arrakeen appellent simplement « le Kysse ». C'est sur cette planète que
+      parvient la maison Atreides, chargée par l'Empereur Feudal de gérer les sables où
+      naît le Kysse.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      L'Empereur, dans sa sagesse impénétrable, a compris que la seule façon de contrer
+      la toute-puissance des Harkonnen — maîtres actuels d'Arrakeen et dépositaires d'une
+      cruauté sans borne — était de confier la gouvernance du désert à une autre maison
+      noble. Les Atreides, ennemis jurés des Harkonnen, semblaient les plus indiqués.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      Paul Atreides, héritier de la maison, n'a que quinze ans. Il est déjà marqué par
+      la prescience — un don que lui a transmis sa mère, lady Jessica, disciple des
+      Bene Guezer. Il perçoit les embranchements du temps, les possibles futures de
+      l'univers. Ce don le ronge, car il voit aussi sa propre chute, celle de son
+      peuple, et le chemin de sang qui le mène au trône impérial.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      Sur Caladan, la planète verte des Atreides, Paul erre dans les forêts de brume.
+      Sa mère l'attend dans la salle de méditation. « Tu dois te libérer, Paul, »
+      lui a-t-elle dit. « Le passé est une ancre. Regarde devant toi. » Mais le
+      passé refuse de s'évanouir. Le visage de ses amis, le rire de ses sœurs,
+      l'odeur de la pluie sur les feuilles — tout reste gravé.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      « Mère, je crains, » avoue-t-il.
+    </p>
+    <p>
+      Lady Jessica lui prend les mains. « La peur est la petite mort qui conduit à
+      la pensée mortelle, » répond-elle d'une voix calme. « Ce n'est pas la peur
+      elle-même, mais l'immobilité qu'elle engendre, qui détruit. »
+    </p>
+  </div>
+  <div class="text-center mt-3">
+    <span class="text-muted">— Suite en page 2 —</span>
+  </div>
+</main>
+
+<footer class="footer"><p>© 2026 symfoLivre — Prototype</p></footer>
+
+<script>
+let fontSize = 1.1;
+function changeFont(dir) {
+  fontSize += dir * 0.1;
+  document.getElementById('readerContent').style.fontSize = fontSize + 'rem';
+}
+</script>
+</body>
+</html>
+```
+
+register.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S'inscrire — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);">Se connecter</a>
+    </div>
+  </header>
+
+  <main class="container" style="min-height:70vh;display:flex;align-items:center;">
+
+    <div class="form-card" style="width:100%;max-width:520px;">
+      <h2>📝 Créer un compte</h2>
+      <p class="text-center text-muted text-sm mb-3">Choisissez votre profil et remplissez vos informations</p>
+
+      <!-- Choix du rôle -->
+      <div class="role-select">
+        <div class="role-option selected" onclick="this.querySelector('input').checked=true">
+          <input type="radio" name="role" value="LECTEUR" checked style="display:none;">
+          <div class="icon">📖</div>
+          <div class="label">Lecteur</div>
+          <div class="desc">Lire & télécharger des livres</div>
+        </div>
+        <div class="role-option" onclick="document.querySelectorAll('.role-option').forEach(o=>o.classList.remove('selected'));this.classList.add('selected')">
+          <input type="radio" name="role" value="AUTEUR" style="display:none;">
+          <div class="icon">✍️</div>
+          <div class="label">Auteur</div>
+          <div class="desc">Publier & gérer ses œuvres</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstname">Prénom</label>
+          <input type="text" id="firstname" placeholder="Clara">
+        </div>
+        <div class="form-group">
+          <label for="lastname">Nom</label>
+          <input type="text" id="lastname" placeholder="Durand">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" placeholder="clara.durand@exemple.fr">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="reg-pass">Mot de passe</label>
+          <input type="password" id="reg-pass" placeholder="Min. 8 caractères">
+        </div>
+        <div class="form-group">
+          <label for="reg-pass2">Confirmer</label>
+          <input type="password" id="reg-pass2" placeholder="••••••••">
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-top:.5rem;" onclick="showToast('Compte créé avec succès !'); setTimeout(()=>window.location.href='login.html',1200);">
+        Créer mon compte →
+      </button>
+
+      <div class="form-footer">
+        Déjà inscrit ? <a href="login.html">Se connecter</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+```
+
+search.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche — symfoLivre</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.9 0-3.7.4-5.25 1.22L12 5.8l.75-1.1C13.3 3.88 15.1 3.5 17 3.5c1.17 0 2.39.15 3.5.5V5zm-9 4.5L6.5 8 3 6v14l6 2 6-2 6 2V6l-3.5 2L12 9.5z"/></svg>
+    symfo<span>Livre</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="search.html" class="active">Recherche</a></li>
+    <li><a href="basket.html">Mon Panier</a></li>
+  </ul>
+  <div class="nav-auth"><span class="badge-role">Visiteur</span></div>
+</nav>
+
+<main class="container">
+  <h1 class="page-title">Recherche de livres</h1>
+  <p class="page-subtitle">Trouvez votre prochain livre par titre, auteur, ISBN ou catégorie.</p>
+
+  <div class="card mb-3">
+    <div class="card-body" style="padding:1.5rem;">
+      <div class="grid" style="grid-template-columns:2fr 1fr 1fr 1fr;gap:1rem;align-items:end;">
+        <div class="form-group" style="margin:0;">
+          <label>Requête</label>
+          <input type="text" class="form-control" id="q" placeholder="Titre, mot-clé…">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Auteur</label>
+          <input type="text" class="form-control" placeholder="Ex: Hugo">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Catégorie</label>
+          <select class="form-control form-select">
+            <option>Toutes</option>
+            <option>Science-Fiction</option>
+            <option>Histoire</option>
+            <option>Littérature</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Type</label>
+          <select class="form-control form-select">
+            <option>Tous</option>
+            <option>Texte</option>
+            <option>Audio</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt-2">
+        <button class="btn btn-primary" onclick="doSearch()">🔍 Rechercher</button>
+        <a href="index.html" class="btn btn-outline ml-2" style="margin-left:.5rem;">Réinitialiser</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Résultats -->
+  <div id="results">
+    <p class="text-muted mb-2">Saisissez une requête pour lancer la recherche…</p>
+  </div>
+</main>
+
+<footer class="footer"><p>© 2026 symfoLivre — Prototype</p></footer>
+
+<script>
+const mockBooks = [
+  { title:"Dune : La Chute de L'Arrakeen", author:"Frank Herbert", type:"TEXTE", cat:"SF", isbn:"978-2-266-10301-4" },
+  { title:"Les Misérables (Audio)", author:"Victor Hugo", type:"AUDIO", cat:"LITT", isbn:"978-2-07-040286-8" },
+  { title:"Les Rois Maudits", author:"Maurice Druon", type:"TEXTE", cat:"HISTOIRE", isbn:"978-2-266-31373-0" },
+  { title:"Cent ans de solitude", author:"G. García Márquez", type:"TEXTE", cat:"LITT", isbn:"978-2-07-036054-6" },
+  { title:"Neuromanche (Audio)", author:"William Gibson", type:"AUDIO", cat:"SF", isbn:"978-2-266-13089-8" },
+  { title:"L'Étranger", author:"Albert Camus", type:"TEXTE", cat:"LITT", isbn:"978-2-07-036003-4" },
+];
+function doSearch() {
+  const q = document.getElementById('q').value.toLowerCase();
+  const filtered = mockBooks.filter(b =>
+    b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)
+  );
+  const el = document.getElementById('results');
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="alert alert-info">Aucun résultat trouvé pour « ' + q + ' ».</div>';
+    return;
+  }
+  el.innerHTML = `<p class="text-muted mb-2">${filtered.length} résultat(s) pour « ${q} »</p>
+    <div class="grid grid-3">` +
+    filtered.map(b => `
+      <div class="card book-card">
+        <div class="cover ${b.type==='AUDIO'?'audio':''}">${b.type==='AUDIO'?'🎧':'📖'}</div>
+        <div class="card-body">
+          <h3>${b.title}</h3>
+          <p class="author">${b.author}</p>
+          <div class="flex" style="gap:.4rem;">
+            <span class="badge badge-${b.type==='AUDIO'?'audio':'text'}">${b.type}</span>
+            <span class="badge badge-cat">${b.cat}</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="book-detail.html" class="btn btn-primary btn-sm">Détails</a>
+        </div>
+      </div>`).join('') +
+    '</div>';
+}
+</script>
+</body>
+</html>
+```
+
+upload.html
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter un livre — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html" class="active">Mes livres</a>
+      <a href="upload.html" class="active">Ajouter</a>
+      <a href="profile.html">Profil</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">✍️ Bob (Auteur)</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>✍️ Téléverser un livre</h1>
+      <p>Partagez votre œuvre avec la communauté symfoLivre</p>
+    </div>
+
+    <div style="max-width:640px;margin:0 auto;" class="form-card" style="max-width:100%;">
+
+      <!-- Dropzone -->
+      <div class="dropzone" id="dropzone">
+        <div class="icon">📁</div>
+        <p><strong>Déposez votre fichier ici</strong> ou cliquez pour parcourir</p>
+        <p class="formats">Formats acceptés : <strong>.txt</strong>, <strong>.md</strong> (texte) ou <strong>.zip</strong> (audio) — Max 50 Mo</p>
+        <p class="filename text-sm mt-1" style="color:var(--clr-success);"></p>
+      </div>
+
+      <div class="form-group">
+        <label for="u-title">Titre du livre *</label>
+        <input type="text" id="u-title" placeholder="Ex : Les Fleurs du mal">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="u-isbn">ISBN (13 chiffres)</label>
+          <input type="text" id="u-isbn" placeholder="978-XXXX-XXXXX-X" maxlength="17">
+        </div>
+        <div class="form-group">
+          <label for="u-year">Année de publication</label>
+          <input type="number" id="u-year" min="0" max="2026" placeholder="2025">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="u-cat">Catégorie</label>
+          <select id="u-cat">
+            <option>— Choisir —</option>
+            <option>Roman</option>
+            <option>Biologie</option>
+            <option>Science-Fiction</option>
+            <option>Poésie</option>
+            <option>Philosophie</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="u-type">Type de contenu</label>
+          <select id="u-type">
+            <option value="TEXTE">📄 Texte (.txt / .md)</option>
+            <option value="AUDIO">🎵 Audio (.zip)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="u-summary">Résumé / Description</label>
+        <textarea id="u-summary" placeholder="Décrivez brièvement votre œuvre (2 à 5 phrases)…"></textarea>
+      </div>
+
+      <button class="btn btn-accent btn-lg" style="width:100%;justify-content:center;margin-top:.5rem;" onclick="showToast('Livre téléversé avec succès ! Il est maintenant en attente de modération.')">
+        🚀 Publier le livre
+      </button>
+
+      <div class="alert alert-info mt-3">
+        ℹ️ Votre livre sera visible immédiatement. Un administrateur peut le modérer ou le retirer à tout moment.
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+```

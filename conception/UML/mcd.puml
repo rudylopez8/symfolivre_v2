@@ -1,0 +1,37 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+
+entity "Utilisateur" as User {
+    * id
+    --
+    email
+    nom
+    prenom
+    roles
+}
+
+entity "Livre" as Book {
+    * id
+    --
+    titre
+    isbn
+    resume
+    type
+    chemin_fichier
+    date_publication
+}
+
+entity "Catégorie" as Category {
+    * id
+    --
+    label
+    description
+}
+
+' Relations
+User "1" -- "0..*" Book : Publie >
+Category "1" -- "0..*" Book : Classe >
+User "0..*" -- "0..*" Book : Ajoute au panier >
+
+@enduml

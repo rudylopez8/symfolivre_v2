@@ -1,0 +1,76 @@
+@startuml
+title Diagramme des Cas d'Utilisation - symfoLivre
+
+skinparam packageStyle rectangle
+left to right direction
+
+actor "Visiteur" as Visiteur
+actor "Lecteur" as Lecteur
+actor "Auteur" as Auteur
+actor "Administrateur" as Admin
+actor "Client API" as API_Client
+
+' Héritage des rôles
+Lecteur --|> Visiteur
+Auteur --|> Lecteur
+Admin --|> Lecteur
+
+rectangle "Système symfoLivre" {
+
+    package "Gestion Compte & Auth" {
+        usecase "S'inscrire" as UC_Register
+        usecase "S'authentifier" as UC_Login
+        usecase "Gérer son profil" as UC_Profile
+    }
+
+    package "Consultation" {
+        usecase "Consulter la liste des livres" as UC_ListBooks
+        usecase "Rechercher un livre" as UC_Search
+        usecase "Voir détails d'un livre" as UC_Details
+        usecase "Lire un livre en ligne (.txt/.md)" as UC_ReadOnline
+        usecase "Télécharger un livre" as UC_Download
+        usecase "Gérer son panier de lecture" as UC_Basket
+    }
+
+    package "Contribution (Auteur)" {
+        usecase "Téléverser un livre" as UC_Upload
+        usecase "Modifier/Supprimer ses propres livres" as UC_ManageOwnBooks
+    }
+
+    package "Administration" {
+        usecase "Gérer les utilisateurs & rôles" as UC_ManageUsers
+        usecase "Modérer tous les livres" as UC_ManageAllBooks
+        usecase "Gérer les catégories" as UC_ManageCats
+    }
+
+    package "Interface API" {
+        usecase "Interroger un livre (Titre/ISBN)" as UC_API_Search
+    }
+}
+
+' Liens Visiteur
+Visiteur --> UC_ListBooks
+Visiteur --> UC_Search
+Visiteur --> UC_Details
+Visiteur --> UC_Register
+
+' Liens Lecteur
+Lecteur --> UC_Login
+Lecteur --> UC_ReadOnline
+Lecteur --> UC_Download
+Lecteur --> UC_Basket
+Lecteur --> UC_Profile
+
+' Liens Auteur
+Auteur --> UC_Upload
+Auteur --> UC_ManageOwnBooks
+
+' Liens Admin
+Admin --> UC_ManageUsers
+Admin --> UC_ManageAllBooks
+Admin --> UC_ManageCats
+
+' Liens API
+API_Client --> UC_API_Search
+
+@enduml

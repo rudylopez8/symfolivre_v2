@@ -1,0 +1,39 @@
+@startuml --- Module Admin: Gestion Utilisateurs & Rôles ---
+title Administration des comptes et rôles
+
+|Administrateur|
+start
+:Accède au panel "Gestion Utilisateurs";
+:Sélectionne un utilisateur;
+if (Action == "Modifier Rôle" ?) then (Oui)
+    :Choisit le nouveau rôle (Lecteur, Auteur ou Admin);
+    :Valide le changement;
+    
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    if (Admin ?) then (Oui)
+        |Base de données|
+        :Met à jour le champ 'roles' de l'utilisateur;
+        |Serveur|
+        :Confirme le changement de rôle;
+    else (Non)
+        :Erreur 403;
+    endif
+else (Action == "Supprimer Utilisateur" ?)
+    :Clique sur "Supprimer";
+    
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    if (Admin ?) then (Oui)
+        |Base de données|
+        :Supprime l'utilisateur et ses liens panier;
+        |Serveur|
+        :Confirme la suppression;
+    else (Non)
+        :Erreur 403;
+    endif
+endif
+|Administrateur|
+:Voit la liste des utilisateurs mise à jour;
+stop
+@enduml

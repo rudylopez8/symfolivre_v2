@@ -1,0 +1,32 @@
+@startuml --- Module Consultation: Lecture en ligne ---
+title Lecture d'un livre texte (.txt / .md)
+
+|Lecteur/Auteur|
+start
+:Consulte la fiche d'un livre;
+if (Type du livre == "Texte" ?) then (Oui)
+    :Clique sur "Lire en ligne";
+    
+    |Serveur|
+    :Vérifie la session;
+    if (Session valide ?) then (Oui)
+        :Récupère le chemin du fichier .txt ou .md;
+        |Système de Fichiers|
+        :Lit le contenu du fichier;
+        |Serveur|
+        :Injecte le texte dans un template de lecture;
+        :Envoie la page au navigateur;
+        |Lecteur/Auteur|
+        :Lit l'ouvrage sur le site;
+        stop
+    else (Non)
+        :Redirige vers connexion;
+        stop
+    endif
+else (Non)
+    |Lecteur/Auteur|
+    :Le bouton "Lire en ligne" est désactivé;
+    :L'utilisateur doit télécharger le .zip audio;
+    stop
+endif
+@enduml

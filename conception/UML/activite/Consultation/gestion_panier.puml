@@ -1,0 +1,39 @@
+@startuml --- Module Consultation: Panier de lecture ---
+title --- Module Consultation: Gestion du panier de lecture (Ajout et Suppression) ---
+
+|Lecteur/Auteur|
+start
+:Accède à la fiche d'un livre;
+if (Action == "Ajouter au panier" ?) then (Oui)
+    |Serveur|
+    :Vérifie la session;
+    if (Session valide ?) then (Oui)
+        |Base de données|
+        :Vérifie existence du lien [Utilisateur <-> Livre];
+        if (Lien existant ?) then (Non)
+            :Crée l'association dans la table Panier;
+            |Serveur|
+            :Retourne "Ajouté avec succès";
+        else (Oui)
+            |Serveur|
+            :Retourne "Déjà dans le panier";
+        endif
+    else (Non)
+        :Redirige vers connexion;
+    endif
+else (Action == "Supprimer du panier" ?)
+    |Serveur|
+    :Vérifie la session;
+    if (Session valide ?) then (Oui)
+        |Base de données|
+        :Supprime l'association [Utilisateur <-> Livre];
+        |Serveur|
+        :Retourne "Livre retiré du panier";
+    else (Non)
+        :Redirige vers connexion;
+    endif
+endif
+|Lecteur/Auteur|
+:Voit la mise à jour de son panier;
+stop
+@enduml

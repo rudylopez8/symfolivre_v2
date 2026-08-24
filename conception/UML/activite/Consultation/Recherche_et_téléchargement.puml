@@ -1,0 +1,54 @@
+@startuml  --- Module Consultation: Recherche et Téléchargement --- 
+title  --- Module Consultation: Recherche et Téléchargement d'un livre ---
+
+|Utilisateur|
+start
+:Saisit un mot-clé dans la barre de recherche;
+:Clique sur "Rechercher";
+
+|Serveur|
+:Reçoit la requête de recherche;
+:Construit la requête SQL (Titre/Auteur/Catégorie);
+
+|Base de données|
+:Exécute la recherche;
+:Retourne la liste des livres correspondants;
+
+|Serveur|
+:Génère la page de résultats;
+:Envoie la page;
+
+|Utilisateur|
+:Consulte la liste;
+:Sélectionne un livre et clique sur "Détails";
+
+|Serveur|
+:Récupère les infos complètes du livre (ISBN, résumé...);
+:Envoie la page de détails;
+
+|Utilisateur|
+:Clique sur "Télécharger le livre";
+
+|Serveur|
+:Vérifie la session utilisateur;
+if (Utilisateur authentifié ?) then (Oui)
+    :Vérifie le chemin du fichier sur le serveur;
+    if (Fichier existant ?) then (Oui)
+        :Prépare le flux de téléchargement (.txt, .md ou .zip);
+        |Utilisateur|
+        :Reçoit et enregistre le fichier;
+        stop
+    else (Non)
+        |Serveur|
+        :Retourne erreur "Fichier introuvable";
+        |Utilisateur|
+        :Voit message d'erreur;
+        stop
+    endif
+else (Non)
+    :Redirige vers la page de connexion;
+    |Utilisateur|
+    :Voit l'invitation à s'inscrire/se connecter;
+    stop
+endif
+@enduml

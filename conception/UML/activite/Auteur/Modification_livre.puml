@@ -1,0 +1,52 @@
+@startuml --- Module Auteur: Modification Livre ---
+title Modification d'un livre par l'auteur
+
+|Auteur|
+start
+:Accède à "Mes Livres";
+:Sélectionne un livre et clique sur "Modifier";
+
+|Serveur|
+:Vérifie la session;
+if (Rôle == ROLE_AUTEUR ?) then (Oui)
+    |Base de données|
+    :Vérifie si l'auteur est le propriétaire du livre;
+    if (Propriétaire ?) then (Oui)
+        |Serveur|
+        :Affiche le formulaire avec les données actuelles;
+        |Auteur|
+        :Modifie les métadonnées ou remplace le fichier;
+        :Valide les modifications;
+        
+        |Serveur|
+        :Valide les nouvelles données/extension fichier;
+        if (Données valides ?) then (Oui)
+            if (Fichier remplacé ?) then (Oui)
+                |Système de Fichiers|
+                :Supprime l'ancien fichier;
+                :Enregistre le nouveau fichier;
+            endif
+            |Base de données|
+            :Met à jour les métadonnées en DB;
+            |Serveur|
+            :Confirme la modification;
+            |Auteur|
+            :Voit le livre mis à jour;
+            stop
+        else (Non)
+            |Serveur|
+            :Retourne erreur de validation;
+            |Auteur|
+            :Corrige les erreurs;
+            stop
+        endif
+    else (Non)
+        |Serveur|
+        :Retourne erreur 403 "Action interdite";
+        stop
+    endif
+else (Non)
+    :Redirige vers connexion;
+    stop
+endif
+@enduml

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes livres — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html" class="active">Mes livres</a>
+      <a href="upload.html">+ Ajouter</a>
+      <a href="profile.html">Profil</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">✍️ Bob (Auteur)</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>📚 Mes publications</h1>
+      <p>Gérez les livres que vous avez publiés</p>
+    </div>
+
+    <div class="flex-between mb-3">
+      <span class="text-muted">2 livres publiés</span>
+      <a href="upload.html" class="btn btn-accent btn-sm">+ Nouveau livre</a>
+    </div>
+
+    <div class="book-grid" id="my-books-grid">
+      <!-- Rendu par JS (simule les livres de l'auteur Bob) -->
+    </div>
+
+    <div class="alert alert-info mt-4">
+      💡 En tant qu'auteur, vous pouvez modifier ou supprimer vos propres livres. Un administrateur conserve un accès total.
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

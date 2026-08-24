@@ -1,0 +1,46 @@
+@startuml --- Téléversement Auteur: Ajouter un livre ---
+title Téléversement d'un livre par un Auteur
+
+|Auteur|
+start
+:Accède à la page "Ajouter un livre";
+
+|Serveur|
+:Vérifie la session;
+if (Rôle == ROLE_AUTEUR ou ROLE_ADMIN ?) then (Oui)
+    :Affiche le formulaire de dépôt;
+    |Auteur|
+    :Saisit les métadonnées (Titre, ISBN...);
+    :Sélectionne le fichier (.txt, .md ou .zip);
+    :Valide le formulaire;
+
+    |Serveur|
+    :Reçoit les données et le fichier;
+    :Vérifie l'extension du fichier;
+    if (Extension valide ?) then (Oui)
+        :Génère un nom de fichier unique;
+        :Déplace le fichier vers le stockage serveur;
+        
+        |Base de données|
+        :Enregistre les métadonnées et le chemin du fichier;
+        :Liaise le livre à l'auteur actuel;
+        
+        |Serveur|
+        :Confirme le succès de l'opération;
+        |Auteur|
+        :Voit le message de confirmation;
+        stop
+    else (Non)
+        |Serveur|
+        :Retourne erreur "Format de fichier non supporté";
+        |Auteur|
+        :Voit le message d'erreur;
+        stop
+    endif
+else (Non)
+    :Retourne erreur 403 (Accès refusé);
+    |Auteur|
+    :Voit message "Action interdite";
+    stop
+endif
+@enduml

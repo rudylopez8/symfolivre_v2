@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Se connecter — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="api.html">API</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="register.html" class="btn btn-accent btn-sm">S'inscrire</a>
+    </div>
+  </header>
+
+  <main class="container" style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
+
+    <div class="form-card" style="width:100%;max-width:440px;">
+      <h2>🔐 Se connecter</h2>
+      <p class="text-center text-muted text-sm mb-3">Accédez à votre espace symfoLivre</p>
+
+      <div class="form-group">
+        <label for="email">Adresse email</label>
+        <input type="email" id="email" placeholder="vous@exemple.fr" value="claire@exemple.fr">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" placeholder="••••••••" value="password123">
+      </div>
+
+      <div class="form-group" style="display:flex;justify-content:space-between;align-items:center;">
+        <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;cursor:pointer;">
+          <input type="checkbox" checked> Se souvenir de moi
+        </label>
+        <a href="#" class="text-sm">Mot de passe oublié ?</a>
+      </div>
+
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" onclick="showToast('Connexion réussie ! Redirection…'); setTimeout(()=>window.location.href='index.html', 1200);">
+        Se connecter →
+      </button>
+
+      <div class="form-footer">
+        Pas encore de compte ? <a href="register.html">Créer un compte</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

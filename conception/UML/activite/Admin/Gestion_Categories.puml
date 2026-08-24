@@ -1,0 +1,26 @@
+@startuml --- Module Admin: Gestion Catégories ---
+title Gestion des catégories de livres
+
+|Administrateur|
+start
+:Accède à "Gestion des Catégories";
+if (Action == "Créer" ?) then (Oui)
+    :Saisit le nom de la catégorie;
+    :Valide;
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    |Base de données|
+    :Insère la nouvelle catégorie;
+else (Action == "Supprimer" ?)
+    :Sélectionne une catégorie et clique sur "Supprimer";
+    |Serveur|
+    :Vérifie session ROLE_ADMIN;
+    |Base de données|
+    :Supprime la catégorie / Déplace les livres vers "Sans Catégorie";
+endif
+|Serveur|
+:Confirme l'opération;
+|Administrateur|
+:Voit la liste des catégories à jour;
+stop
+@enduml

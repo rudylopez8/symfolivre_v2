@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon profil — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html">Mes livres</a>
+      <a href="profile.html" class="active">Profil</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">👤 Claire</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>👤 Mon profil</h1>
+      <p>Gérez vos informations personnelles et vos préférences</p>
+    </div>
+
+    <div style="max-width:600px;margin:0 auto;">
+
+      <!-- Résumé -->
+      <div class="form-card" style="max-width:100%;margin-bottom:1.5rem;">
+        <div class="flex gap-2 mb-2" style="align-items:center;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--clr-primary);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;">CD</div>
+          <div>
+            <h3 class="font-weight-600">Claire Petit</h3>
+            <span class="text-muted text-sm">claire@exemple.fr · Rôle : Lecteur</span>
+          </div>
+        </div>
+        <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:0;">
+          <div class="stat-card"><div class="number">2</div><div class="label">Livres lus</div></div>
+          <div class="stat-card"><div class="number">1</div><div class="label">En lecture</div></div>
+          <div class="stat-card"><div class="number">0</div><div class="label">Téléchargés</div></div>
+        </div>
+      </div>
+
+      <!-- Formulaire édition -->
+      <div class="form-card" style="max-width:100%;">
+        <h2>✏️ Modifier mes informations</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" value="Claire">
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" value="Petit">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" value="claire@exemple.fr">
+        </div>
+
+        <div class="form-group">
+          <label>Nouveau mot de passe <span class="text-muted text-sm">(laisser vide pour ne pas changer)</span></label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <div class="form-group">
+          <label>Confirmer le mot de passe</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="showToast('Profil mis à jour avec succès !')">
+          💾 Enregistrer les modifications
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

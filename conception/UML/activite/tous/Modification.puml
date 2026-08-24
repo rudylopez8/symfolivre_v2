@@ -1,0 +1,33 @@
+@startuml --- Module Profil: Modification ---
+title Mise à jour du profil utilisateur
+
+|Lecteur/Auteur|
+start
+:Accède à "Mon Profil";
+:Modifie ses informations personnelles;
+:Clique sur "Enregistrer";
+
+|Serveur|
+:Vérifie la session;
+if (Session valide ?) then (Oui)
+    :Valide les données saisies;
+    if (Données valides ?) then (Oui)
+        |Base de données|
+        :Met à jour les informations de l'utilisateur;
+        |Serveur|
+        :Confirme la modification;
+        |Lecteur/Auteur|
+        :Voit le message "Profil mis à jour";
+        stop
+    else (Non)
+        |Serveur|
+        :Retourne erreur de validation;
+        |Lecteur/Auteur|
+        :Corrige les erreurs;
+        stop
+    endif
+else (Non)
+    :Redirige vers connexion;
+    stop
+endif
+@enduml

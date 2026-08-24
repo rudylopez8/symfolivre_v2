@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter un livre — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html" class="active">Mes livres</a>
+      <a href="upload.html" class="active">Ajouter</a>
+      <a href="profile.html">Profil</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">✍️ Bob (Auteur)</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>✍️ Téléverser un livre</h1>
+      <p>Partagez votre œuvre avec la communauté symfoLivre</p>
+    </div>
+
+    <div style="max-width:640px;margin:0 auto;" class="form-card" style="max-width:100%;">
+
+      <!-- Dropzone -->
+      <div class="dropzone" id="dropzone">
+        <div class="icon">📁</div>
+        <p><strong>Déposez votre fichier ici</strong> ou cliquez pour parcourir</p>
+        <p class="formats">Formats acceptés : <strong>.txt</strong>, <strong>.md</strong> (texte) ou <strong>.zip</strong> (audio) — Max 50 Mo</p>
+        <p class="filename text-sm mt-1" style="color:var(--clr-success);"></p>
+      </div>
+
+      <div class="form-group">
+        <label for="u-title">Titre du livre *</label>
+        <input type="text" id="u-title" placeholder="Ex : Les Fleurs du mal">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="u-isbn">ISBN (13 chiffres)</label>
+          <input type="text" id="u-isbn" placeholder="978-XXXX-XXXXX-X" maxlength="17">
+        </div>
+        <div class="form-group">
+          <label for="u-year">Année de publication</label>
+          <input type="number" id="u-year" min="0" max="2026" placeholder="2025">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="u-cat">Catégorie</label>
+          <select id="u-cat">
+            <option>— Choisir —</option>
+            <option>Roman</option>
+            <option>Biologie</option>
+            <option>Science-Fiction</option>
+            <option>Poésie</option>
+            <option>Philosophie</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="u-type">Type de contenu</label>
+          <select id="u-type">
+            <option value="TEXTE">📄 Texte (.txt / .md)</option>
+            <option value="AUDIO">🎵 Audio (.zip)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="u-summary">Résumé / Description</label>
+        <textarea id="u-summary" placeholder="Décrivez brièvement votre œuvre (2 à 5 phrases)…"></textarea>
+      </div>
+
+      <button class="btn btn-accent btn-lg" style="width:100%;justify-content:center;margin-top:.5rem;" onclick="showToast('Livre téléversé avec succès ! Il est maintenant en attente de modération.')">
+        🚀 Publier le livre
+      </button>
+
+      <div class="alert alert-info mt-3">
+        ℹ️ Votre livre sera visible immédiatement. Un administrateur peut le modérer ou le retirer à tout moment.
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

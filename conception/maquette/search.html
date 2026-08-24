@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche — symfoLivre</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.9 0-3.7.4-5.25 1.22L12 5.8l.75-1.1C13.3 3.88 15.1 3.5 17 3.5c1.17 0 2.39.15 3.5.5V5zm-9 4.5L6.5 8 3 6v14l6 2 6-2 6 2V6l-3.5 2L12 9.5z"/></svg>
+    symfo<span>Livre</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="search.html" class="active">Recherche</a></li>
+    <li><a href="basket.html">Mon Panier</a></li>
+  </ul>
+  <div class="nav-auth"><span class="badge-role">Visiteur</span></div>
+</nav>
+
+<main class="container">
+  <h1 class="page-title">Recherche de livres</h1>
+  <p class="page-subtitle">Trouvez votre prochain livre par titre, auteur, ISBN ou catégorie.</p>
+
+  <div class="card mb-3">
+    <div class="card-body" style="padding:1.5rem;">
+      <div class="grid" style="grid-template-columns:2fr 1fr 1fr 1fr;gap:1rem;align-items:end;">
+        <div class="form-group" style="margin:0;">
+          <label>Requête</label>
+          <input type="text" class="form-control" id="q" placeholder="Titre, mot-clé…">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Auteur</label>
+          <input type="text" class="form-control" placeholder="Ex: Hugo">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Catégorie</label>
+          <select class="form-control form-select">
+            <option>Toutes</option>
+            <option>Science-Fiction</option>
+            <option>Histoire</option>
+            <option>Littérature</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label>Type</label>
+          <select class="form-control form-select">
+            <option>Tous</option>
+            <option>Texte</option>
+            <option>Audio</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt-2">
+        <button class="btn btn-primary" onclick="doSearch()">🔍 Rechercher</button>
+        <a href="index.html" class="btn btn-outline ml-2" style="margin-left:.5rem;">Réinitialiser</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Résultats -->
+  <div id="results">
+    <p class="text-muted mb-2">Saisissez une requête pour lancer la recherche…</p>
+  </div>
+</main>
+
+<footer class="footer"><p>© 2026 symfoLivre — Prototype</p></footer>
+
+<script>
+const mockBooks = [
+  { title:"Dune : La Chute de L'Arrakeen", author:"Frank Herbert", type:"TEXTE", cat:"SF", isbn:"978-2-266-10301-4" },
+  { title:"Les Misérables (Audio)", author:"Victor Hugo", type:"AUDIO", cat:"LITT", isbn:"978-2-07-040286-8" },
+  { title:"Les Rois Maudits", author:"Maurice Druon", type:"TEXTE", cat:"HISTOIRE", isbn:"978-2-266-31373-0" },
+  { title:"Cent ans de solitude", author:"G. García Márquez", type:"TEXTE", cat:"LITT", isbn:"978-2-07-036054-6" },
+  { title:"Neuromanche (Audio)", author:"William Gibson", type:"AUDIO", cat:"SF", isbn:"978-2-266-13089-8" },
+  { title:"L'Étranger", author:"Albert Camus", type:"TEXTE", cat:"LITT", isbn:"978-2-07-036003-4" },
+];
+function doSearch() {
+  const q = document.getElementById('q').value.toLowerCase();
+  const filtered = mockBooks.filter(b =>
+    b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q)
+  );
+  const el = document.getElementById('results');
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="alert alert-info">Aucun résultat trouvé pour « ' + q + ' ».</div>';
+    return;
+  }
+  el.innerHTML = `<p class="text-muted mb-2">${filtered.length} résultat(s) pour « ${q} »</p>
+    <div class="grid grid-3">` +
+    filtered.map(b => `
+      <div class="card book-card">
+        <div class="cover ${b.type==='AUDIO'?'audio':''}">${b.type==='AUDIO'?'🎧':'📖'}</div>
+        <div class="card-body">
+          <h3>${b.title}</h3>
+          <p class="author">${b.author}</p>
+          <div class="flex" style="gap:.4rem;">
+            <span class="badge badge-${b.type==='AUDIO'?'audio':'text'}">${b.type}</span>
+            <span class="badge badge-cat">${b.cat}</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="book-detail.html" class="btn btn-primary btn-sm">Détails</a>
+        </div>
+      </div>`).join('') +
+    '</div>';
+}
+</script>
+</body>
+</html>

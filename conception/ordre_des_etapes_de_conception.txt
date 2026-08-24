@@ -1,0 +1,22 @@
+1. Analyse des besoins (Fonctionnel)
+1.
+User Stories : Lister toutes les actions possibles pour chaque profil (Visiteur, Lecteur, Auteur, Admin).
+2.
+Use Cases : Détailler le scénario de fonctionnement des fonctionnalités clés (ex: le processus d'upload d'un livre ou le tunnel d'achat/panier).
+3.
+Diagramme d'activité : Visualiser les flux de navigation et les étapes logiques (ex: l'enchaînement des pages lors d'une inscription ou d'une recherche).
+2. Modélisation des données (Données)
+1.
+Dictionnaire de données : Recenser tous les champs nécessaires pour les livres, utilisateurs, catégories, etc.
+2.
+MCD (Modèle Conceptuel de Données) : Définir les relations entre les entités (ex: un Auteur possède des Livres, un Livre appartient à une Catégorie).
+3.
+MLD (Modèle Logique de Données) : Convertir le MCD en schéma relationnel (tables, clés primaires et étrangères) prêt pour la base de données.
+3. Architecture Logicielle (Technique)
+1.
+Diagramme de Classes : Représenter la structure orientée objet de l'application Symfony (les futures Entités, leurs propriétés et leurs méthodes).
+4. Organisation
+1.
+Backlog : Regrouper les User Stories pour créer la feuille de route de développement par priorité.
+En résumé, l'ordre de travail est :
+User Stories → Use Cases → Diagramme d'activité → Dictionnaire de données → MCD → MLD → Diagramme de Classes → Backlog.

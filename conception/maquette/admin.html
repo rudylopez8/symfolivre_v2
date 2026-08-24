@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration — symfoLivre</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="admin.html" class="active">Admin</a>
+      <a href="api.html">API</a>
+    </nav>
+    <div class="nav-actions">
+      <span style="color:rgba(255,255,255,.8);font-size:.85rem;">🛡️ Alice (Admin)</span>
+      <a href="#" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);" onclick="showToast('Déconnecté')">Déconnexion</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>🛡️ Administration</h1>
+      <p>Gestion des utilisateurs, livres et catégories</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="number">4</div><div class="label">Livres</div></div>
+      <div class="stat-card"><div class="number">4</div><div class="label">Utilisateurs</div></div>
+      <div class="stat-card"><div class="number">3</div><div class="label">Catégories</div></div>
+      <div class="stat-card"><div class="number">2</div><div class="label">Paniers actifs</div></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="tab-users">👥 Utilisateurs</div>
+      <div class="tab" data-tab="tab-books">📚 Livres</div>
+      <div class="tab" data-tab="tab-cats">🏷️ Catégories</div>
+    </div>
+
+    <!-- ══ TAB : UTILISATEURS ══ -->
+    <div class="tab-content active" id="tab-users">
+      <div class="flex-between mb-2">
+        <h2 class="text-sm font-weight-600 text-muted">LISTE DES UTILISATEURS</h2>
+        <button class="btn btn-primary btn-sm" onclick="showToast('Formulaire de création (à implémenter en Symfony)')">+ Nouvel utilisateur</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Nom</th><th>Email</th><th>Rôle</th><th>Livres</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="users-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ TAB : LIVRES ══ -->
+    <div class="tab-content" id="tab-books">
+      <div class="flex-between mb-2">
+        <h2 class="text-sm font-weight-600 text-muted">TOUS LES LIVRES</h2>
+        <a href="upload.html" class="btn btn-accent btn-sm">+ Ajouter un livre</a>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Titre</th><th>Auteur</th><th>Catégorie</th><th>Type</th><th>Année</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="books-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ TAB : CATÉGORIES ══ -->
+    <div class="tab-content" id="tab-cats">
+      <div class="flex-between mb-2">
+        <h2 class="text-sm font-weight-600 text-muted">CATÉGORIES DE LIVRES</h2>
+        <button class="btn btn-primary btn-sm" onclick="showToast('Nouvelle catégorie créée (démo)')">+ Nouvelle catégorie</button>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Libellé</th><th>Description</th><th>Nb livres</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="cats-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Prototype</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script>
+    // ─── Rendu des tables admin ───
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Utilisateurs
+      const uTbody = document.getElementById('users-tbody');
+      uTbody.innerHTML = USERS_DEMO.map(u => {
+        const roleClass = u.role === 'Admin' ? 'role-admin' : u.role === 'Auteur' ? 'role-auteur' : 'role-lecteur';
+        return `<tr>
+          <td>${u.id}</td>
+          <td class="font-weight-600">${u.name}</td>
+          <td>${u.email}</td>
+          <td><span class="badge-role ${roleClass}">${u.role}</span></td>
+          <td>${u.books}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Édition de ${u.name} (démo)')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="showToast('${u.name} supprimé (démo)','error')">🗑️</button>
+          </td>
+        </tr>`;
+      }).join('');
+
+      // Livres
+      const bTbody = document.getElementById('books-tbody');
+      bTbody.innerHTML = BOOKS.map(b => `
+        <tr>
+          <td class="font-weight-600">${b.title}</td>
+          <td>${b.author}</td>
+          <td>${b.category}</td>
+          <td>${b.type === 'TEXTE' ? '📄 Texte' : '🎵 Audio'}</td>
+          <td>${b.year}</td>
+          <td>
+            <a href="book.html?id=${b.id}" class="btn btn-outline btn-sm">👁️</a>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Édition de «${b.title}» (démo)')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="showToast('«${b.title}» supprimé (démo)','error')">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Catégories
+      const cTbody = document.getElementById('cats-tbody');
+      const catData = [
+        { id: 1, label: 'Roman', desc: 'Romans, nouvelles, récits littéraires', count: 1 },
+        { id: 2, label: 'Biologie', desc: 'Sciences du vivant, génétique, évolution', count: 1 },
+        { id: 3, label: 'Science-Fiction', desc: 'SF, uchronie, hard SF, space opera', count: 2 },
+      ];
+      cTbody.innerHTML = catData.map(c => `
+        <tr>
+          <td>${c.id}</td>
+          <td class="font-weight-600">${c.label}</td>
+          <td class="text-muted">${c.desc}</td>
+          <td>${c.count}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Édition de «${c.label}» (démo)')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="showToast('Catégorie «${c.label}» supprimée (démo)','error')">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+
+      // ─── Tabs ───
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(tab.dataset.tab).classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

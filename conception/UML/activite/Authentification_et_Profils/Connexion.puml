@@ -1,0 +1,36 @@
+@startuml --- Module Auth: Connexion ---
+title Processus d'Authentification
+
+|Utilisateur|
+start
+:Saisit Email et Mot de passe;
+:Clique sur "Se connecter";
+
+|Serveur|
+:Reçoit les identifiants;
+|Base de données|
+:Recherche l'utilisateur par email;
+if (Utilisateur trouvé ?) then (Oui)
+    |Serveur|
+    :Vérifie la correspondance du mot de passe haché;
+    if (Mot de passe correct ?) then (Oui)
+        :Génère la session utilisateur;
+        :Récupère les rôles associés;
+        :Redirige vers la page d'accueil / dashboard;
+        |Utilisateur|
+        :Accède à son espace personnel;
+        stop
+    else (Non)
+        :Retourne erreur "Identifiants incorrects";
+        |Utilisateur|
+        :Voit le message d'erreur;
+        stop
+    endif
+else (Non)
+    |Serveur|
+    :Retourne erreur "Identifiants incorrects";
+    |Utilisateur|
+    :Voit le message d'erreur;
+    stop
+endif
+@enduml

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>symfoLivre — Bibliothèque numérique</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <header class="navbar">
+    <a href="index.html" class="brand">📚 symfo<span>Livre</span></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="basket.html">Panier</a>
+      <a href="my-books.html">Mes livres</a>
+      <a href="api.html">API</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4);">Se connecter</a>
+      <a href="register.html" class="btn btn-accent btn-sm">S'inscrire</a>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <h1>Votre bibliothèque <span>numérique</span></h1>
+    <p>Lisez, téléchargez et partagez des ouvrages en format texte ou audio. Explorez notre collection.</p>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Rechercher par titre, auteur, ISBN ou catégorie…">
+      <button id="search-btn">Rechercher</button>
+    </div>
+  </section>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="container">
+
+    <!-- Filtres par catégorie -->
+    <div class="filters">
+      <span class="filter-chip active" data-category="Tous">📚 Tous</span>
+      <span class="filter-chip" data-category="Roman">📖 Roman</span>
+      <span class="filter-chip" data-category="Biologie">🧬 Biologie</span>
+      <span class="filter-chip" data-category="Science-Fiction">🚀 Science-Fiction</span>
+    </div>
+
+    <!-- Grille de livres -->
+    <div class="book-grid" id="book-grid">
+      <!-- Rendu par JS -->
+    </div>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <p>© 2026 <a href="index.html">symfoLivre</a> — Bibliothèque numérique en Symfony · Prototype de maquettage</p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

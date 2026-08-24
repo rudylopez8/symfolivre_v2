@@ -1,0 +1,84 @@
+@startuml symfoLivre_ClassDiagram
+skinparam classAttributeIconSize 0
+skinparam classFontSize 12
+
+' ─────────────────────────────────────────────
+'  UTILISATEUR (User)
+' ─────────────────────────────────────────────
+class User {
+  - id : int
+  - email : String
+  - password : String
+  - firstname : String
+  - lastname : String
+  - roles : array
+  - created_at : DateTime
+  - updated_at : DateTime
+  + getId() : int
+  + getEmail() : String
+  + getRoles() : array
+  + getFullName() : String
+  + eraseCredentials() : void
+  + getUserIdentifier() : String
+}
+
+' ─────────────────────────────────────────────
+'  LIVRE (Book)
+' ─────────────────────────────────────────────
+class Book {
+  - id : int
+  - title : String
+  - isbn : String
+  - summary : text
+  - publication_date : Date
+  - type : String
+  - file_path : String
+  - created_at : DateTime
+  - updated_at : DateTime
+  + getId() : int
+  + getTitle() : String
+  + getIsbn() : String
+  + getType() : String
+  + isAudioBook() : boolean
+  + isTextBook() : boolean
+  + getDownloadUrl() : String
+}
+
+' ─────────────────────────────────────────────
+'  CATÉGORIE (Category)
+' ─────────────────────────────────────────────
+class Category {
+  - id : int
+  - label : String
+  - description : text
+  + getId() : int
+  + getLabel() : String
+  + getDescription() : String
+}
+
+' ─────────────────────────────────────────────
+'  PANIER DE LECTURE (ReadingBasket)
+' ─────────────────────────────────────────────
+class ReadingBasket {
+  - id : int
+  - added_at : DateTime
+  + getId() : int
+  + getAddedAt() : DateTime
+  + setAddedAt(date : DateTime) : void
+}
+
+' ─────────────────────────────────────────────
+'  RELATIONS (Associations)
+' ─────────────────────────────────────────────
+
+' Un utilisateur peut être l'auteur de plusieurs livres
+User "1" -- "0..*" Book : publie >
+
+' Un livre appartient à une seule catégorie, et une catégorie a plusieurs livres
+Category "1" -- "0..*" Book : classifie >
+
+' Relation Many-to-Many via la classe d'association ReadingBasket
+User "1" -- "0..*" ReadingBasket : possède >
+Book "1" -- "0..*" ReadingBasket : est ajouté à >
+
+@enduml

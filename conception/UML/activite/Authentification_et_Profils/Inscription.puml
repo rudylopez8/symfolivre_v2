@@ -1,0 +1,29 @@
+@startuml --- Module Auth: Inscription ---
+title Inscription d'un nouvel utilisateur
+
+|Visiteur|
+start
+:Clique sur "S'inscrire";
+:Choisit le type de compte (Lecteur ou Auteur);
+:Remplit le formulaire (Email, Mot de passe, Nom...);
+:Valide l'inscription;
+
+|Serveur|
+:Reçoit les données d'inscription;
+if (L'email est-il déjà utilisé ?) then (Oui)
+    :Retourne erreur "Email déjà existant";
+    |Visiteur|
+    :Voit le message d'erreur;
+    stop
+else (Non)
+    :Hache le mot de passe (BCrypt/Argon2);
+    :Attribue le rôle correspondant (ROLE_USER / ROLE_AUTEUR);
+    |Base de données|
+    :Enregistre l'utilisateur;
+    |Serveur|
+    :Confirme la création du compte;
+    |Visiteur|
+    :Reçoit la confirmation et est redirigé vers Login;
+    stop
+endif
+@enduml

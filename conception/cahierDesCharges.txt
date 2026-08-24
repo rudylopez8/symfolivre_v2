@@ -1,0 +1,35 @@
+Cahier des charges : Site de Bibliothèque en Symfony
+1. Introduction
+L'objectif de ce projet est de développer un site web de bibliothèque en utilisant le framework Symfony. Le site permettra à différents types d'utilisateurs (visiteurs, lecteurs, auteurs et administrateurs) d'interagir avec des livres stockés sous forme de fichiers (.txt ou .md pour les livres texte, ou de dossiers .zip renfermant une liste de fichier .mp3 pour les livres audio) et classés par catégorie. Les lecteurs pourront lire et télécharger des livres, les auteurs pourront faire de même en plus de pouvoir téléverser des livres, tandis que les administrateurs auront la capacité de gérer sans restrictions les livres et les utilisateurs. Les visiteurs non identifiés ne pourront que consulter la liste des livres. Le nom du site sera symfoLivre
+2. Fonctionnalités
+a. Authentification et Gestion des Utilisateurs
+- Système d'authentification avec des rôles (visiteur, lecteur, auteur, administrateur).
+- Inscription d'utilisateurs avec des profils distincts (lecteur, auteur).
+- Profil administrateur pour la gestion des utilisateurs.
+b. Gestion des Livres
+- Création, modification et suppression de livres (administrateur).
+- Téléchargement et lecture de livres (lecteurs et auteurs).
+- Téléversement de livres (auteurs).
+- Classement des livres par catégorie.
+c. Interface Utilisateur
+- Page d'accueil avec une liste de livres.
+- Pages de détails de livre avec, titre du livre, auteur du livre, résumé du livre, ISBN du livre, date de publication du livre, type du livre (texte ou audio), et bouton de téléchargement.
+- Profils d'utilisateurs avec des informations personnelles (lecteur, auteur).
+- Panier de lecture pour les lecteurs.
+d. Sécurité
+- Protection contre l'accès non autorisé aux fonctionnalités (authentification requise).
+- Gestion des autorisations basées sur les rôles.
+e. Recherche
+- Barre de recherche pour trouver des livres par titre, auteur ou catégorie.
+f. API
+- API pour permettre l'interrogation du site symfoLivre pour rechercher un livre par son titre, ou son ISBN.
+3. Technologie
+a. Symfony Framework
+- Utilisation de Symfony pour le développement.
+b. Base de Données
+- Utilisation d'une base de données (MySQL, PostgreSQL, etc.) pour stocker les informations sur les livres et les utilisateurs.
+c. Stockage de Fichiers
+- Stockage des fichiers de livres sur le serveur.
+4. Documentation
+a. Documentation du code source.
+b. Instructions d'installation et de déploiement.

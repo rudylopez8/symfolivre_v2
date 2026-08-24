@@ -1,0 +1,35 @@
+@startuml --- Module API: Recherche exhaustive ---
+title Flux détaillé de l'API de recherche
+
+|Client API|
+start
+:Envoie requête GET /api/books (paramètre titre ou isbn);
+
+|Serveur|
+:Intercepte la demande via le routeur Symfony;
+:Vérifie si le paramètre est un ISBN (format 13 chiffres) ou un Titre;
+
+if (Paramètre valide ?) then (Oui)
+    |Base de données|
+    :Exécute requête SQL :
+    SELECT * FROM livre WHERE isbn = ? OR titre LIKE ?;
+    :Retourne le résultat;
+    
+    |Serveur|
+    if (Résultat trouvé ?) then (Oui)
+        :Transforme l'entité Livre en format JSON via Serializer;
+        :Envoie réponse HTTP 200 OK + Body JSON;
+    else (Non)
+        :Prépare message "Livre non trouvé";
+        :Envoie réponse HTTP 404 Not Found;
+    endif
+else (Non)
+    |Serveur|
+    :Prépare erreur "Paramètre invalide";
+    :Envoie réponse HTTP 400 Bad Request;
+endif
+
+|Client API|
+:Traite la réponse JSON ou l'erreur;
+stop
+@enduml

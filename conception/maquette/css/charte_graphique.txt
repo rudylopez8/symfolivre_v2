@@ -1,0 +1,10 @@
+## 🎨 Charte graphique
+
+| Élément | Valeur |
+|---|---|
+| Couleur primaire | `#1a365d` (bleu marine) |
+| Couleur accent | `#d69e2e` (or / ambre) |
+| Fond | `#f7fafc` (gris très clair) |
+| Police | Segoe UI / system-ui |
+| Rayon arrondi | 8 px / 12 px (cartes) |
+| Ombres | 3 niveaux (shadow / shadow-md / shadow-lg) |

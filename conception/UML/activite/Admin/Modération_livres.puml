@@ -1,0 +1,39 @@
+@startuml  --- Module Admin: Modération Livres ---
+title Modération et Suppression d'un livre par l'Admin
+
+|Administrateur|
+start
+:Accède à l'interface de gestion des livres;
+
+|Serveur|
+:Vérifie la session;
+if (Rôle == ROLE_ADMIN ?) then (Oui)
+    :Charge la liste complète des livres;
+    :Envoie la page;
+    |Administrateur|
+    :Sélectionne un livre à supprimer;
+    :Clique sur "Supprimer définitivement";
+
+    |Serveur|
+    :Reçoit la demande de suppression;
+    :Récupère le chemin du fichier associé;
+
+    |Système de Fichiers|
+    :Supprime physiquement le fichier (.txt, .md ou .zip);
+
+    |Base de données|
+    :Supprime l'entrée correspondante dans la table Livres;
+    :Supprime les liens dans le panier de lecture;
+
+    |Serveur|
+    :Confirme la suppression;
+    |Administrateur|
+    :Voit le livre disparaître de la liste;
+    stop
+else (Non)
+    :Retourne erreur 403;
+    |Administrateur|
+    :Voit message "Accès réservé à l'administrateur";
+    stop
+endif
+@enduml
