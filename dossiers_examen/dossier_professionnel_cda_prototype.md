@@ -1,14 +1,14 @@
-# symfoLivre — Dossier Professionnel
+# symfoLivre : rapport de stage
 
 **Titre professionnel Concepteur Développeur d'Applications (CDA) — RNCP37873**
 
-Candidat : **[Nom Prénom]**
+Candidat : **[Lopez Rudy]**
 
-Session : **[Date de la session d'examen]**
+Session : **[2026/09/08]**
 
-Organisme de formation : **[Nom de l'organisme]**
+Organisme de formation : **[Real Conceil]]**
 
-Période du projet : **[Date de début] — [Date de fin]**
+Période du projet : **[2026/06/29] : [2026/08/21]**
 
 ---NOTE: Ce dossier présente un projet informatique complet réalisé de manière autonome, dans le cadre décrit en section 1.1.---
 
@@ -20,9 +20,10 @@ Période du projet : **[Date de début] — [Date de fin]**
 
 ---PAGE---
 
-## English Summary
-
-symfoLivre is a digital library platform built with Symfony 7, allowing authors to publish books (text or audio format) and readers to browse, read online, download, and build a personal reading list. An administrator role manages categories and user accounts. The project was designed and developed entirely independently — from requirements gathering through deployment documentation and automated testing — covering the three competency blocks (CCP) of the French CDA certification: user interface design, data persistence, and multi-layer application architecture, each with an emphasis on security best practices.
+## Résumé:
+Présentation** Dans le cadre de ma formation**CDA** (Concepteur Développeur d’application, j’ai eu
+l’opportunité de développer un projet de bibliothèque web. Ce projet permet de démontrer les différentes
+compétences techniques et conceptuelles acquises durant la formation.
 
 ---PAGE---
 
@@ -49,11 +50,9 @@ symfoLivre is a digital library platform built with Symfony 7, allowing authors 
 
 ### 1.1 Contexte de la formation et modalités de réalisation du projet
 
-*(Section importante — à ajuster avec précision selon la situation exacte et les consignes de l'organisme de formation. Voir remarque de suivi en fin de document.)*
+Ce projet a été réalisé dans le cadre de la formation au titre professionnel Concepteur Développeur d'Applications. Un stage a par ailleurs été effectué auprès de **[BAM]**, donnant lieu à une convention de stage signée et à un suivi des heures de présence en distanciel. L'entreprise d'accueil, une micro-entreprise, n'a cependant pas souhaité, pour des raisons de protection de sa propriété intellectuelle, donner accès à son code source ni confier de mission de développement encadrée.
 
-Ce projet a été réalisé dans le cadre de la formation au titre professionnel Concepteur Développeur d'Applications. Un stage a par ailleurs été effectué auprès de **[nom de l'entreprise]**, donnant lieu à une convention de stage signée et à un suivi des heures de présence en distanciel. L'entreprise d'accueil, une micro-entreprise, n'a cependant pas souhaité, pour des raisons de protection de sa propriété intellectuelle, donner accès à son code source ni confier de mission de développement encadrée.
-
-Face à cette situation, l'initiative a été prise de définir de manière autonome un projet répondant à un besoin réel et documenté, avec la rédaction d'un cahier des charges personnel, dans le but de démontrer l'ensemble des compétences visées par le titre CDA — de la rédaction du cahier des charges jusqu'au déploiement documenté et aux tests automatisés.
+Face à cette situation, l'initiative a été prise de définir de manière autonome un projet répondant à un besoin réel et documenté, avec la rédaction d'un cahier des charges personnel, dans le but de démontrer une grande part des compétences visées par le titre CDA — de la rédaction du cahier des charges jusqu'au déploiement documenté et aux tests automatisés.
 
 ### 1.2 Origine du besoin
 
@@ -61,20 +60,47 @@ Le besoin fonctionnel s'inspire des services proposés par des bibliothèques nu
 
 ### 1.3 Résumé du projet
 
-symfoLivre est une plateforme de bibliothèque numérique permettant à des auteurs de publier des livres (au format texte `.txt`/`.md` ou audio `.zip`), et à des lecteurs de les consulter, les lire en ligne, les télécharger et constituer un panier de lecture personnel. Un profil administrateur assure la gestion des catégories et des comptes utilisateurs. Le projet s'adresse à trois profils d'utilisateurs (lecteur, auteur, administrateur) et a été développé avec Symfony 7 et une architecture en couches sécurisée à chaque niveau.
+symfoLivre est une plateforme de bibliothèque numérique permettant à des auteurs de publier des livres (au format texte `.txt`/`.md` ou audio `.zip`), et à des lecteurs de les consulter, les lire en ligne, les télécharger et constituer un panier de lecture personnel. Un profil administrateur assure la gestion des catégories et des comptes utilisateurs. Le projet s'adresse à trois profils d'utilisateurs (lecteur, auteur, administrateur) et a été développé avec Symfony 7.4 et une architecture en couches sécurisée à chaque niveau.
 
 ### 1.4 Cahier des charges et expression des besoins
 
+Cahier des charges : Site de Bibliothèque en Symfony
+1. Introduction
+L'objectif de ce projet est de développer un site web de bibliothèque en utilisant le framework Symfony. Le site permettra à différents types d'utilisateurs (visiteurs, lecteurs, auteurs et administrateurs) d'interagir avec des livres stockés sous forme de fichiers (.txt ou .md pour les livres texte, ou de dossiers .zip renfermant une liste de fichier .mp3 pour les livres audio) et classés par catégorie. Les lecteurs pourront lire et télécharger des livres, les auteurs pourront faire de même en plus de pouvoir téléverser des livres, tandis que les administrateurs auront la capacité de gérer sans restrictions les livres et les utilisateurs. Les visiteurs non identifiés ne pourront que consulter la liste des livres. Le nom du site sera symfoLivre
+2. Fonctionnalités
+a. Authentification et Gestion des Utilisateurs
+- Système d'authentification avec des rôles (visiteur, lecteur, auteur, administrateur).
+- Inscription d'utilisateurs avec des profils distincts (lecteur, auteur).
+- Profil administrateur pour la gestion des utilisateurs.
+b. Gestion des Livres
+- Création, modification et suppression de livres (administrateur).
+- Téléchargement et lecture de livres (lecteurs et auteurs).
+- Téléversement de livres (auteurs).
+- Classement des livres par catégorie.
+c. Interface Utilisateur
+- Page d'accueil avec une liste de livres.
+- Pages de détails de livre avec, titre du livre, auteur du livre, résumé du livre, ISBN du livre, date de publication du livre, type du livre (texte ou audio), et bouton de téléchargement.
+- Profils d'utilisateurs avec des informations personnelles (lecteur, auteur).
+- Panier de lecture pour les lecteurs.
+d. Sécurité
+- Protection contre l'accès non autorisé aux fonctionnalités (authentification requise).
+- Gestion des autorisations basées sur les rôles.
+e. Recherche
+- Barre de recherche pour trouver des livres par titre, auteur ou catégorie.
+f. API
+- API pour permettre l'interrogation du site symfoLivre pour rechercher un livre par son titre, ou son ISBN.
+3. Technologie
+a. Symfony Framework
+- Utilisation de Symfony pour le développement.
+b. Base de Données
+- Utilisation d'une base de données (MySQL, PostgreSQL, etc.) pour stocker les informations sur les livres et les utilisateurs.
+c. Stockage de Fichiers
+- Stockage des fichiers de livres sur le serveur.
+4. Documentation
+a. Documentation du code source.
+b. Instructions d'installation et de déploiement.
+
 **Besoins fonctionnels :**
-
-- Un visiteur peut consulter le catalogue et rechercher un livre (titre, ISBN, catégorie) sans être connecté
-- Un lecteur inscrit peut lire un livre en ligne, le télécharger, et gérer un panier de lecture personnel
-- Un auteur peut publier, modifier et supprimer ses propres livres
-- Un administrateur peut gérer les catégories et les comptes utilisateurs (création, modification des rôles, suppression)
-- Chaque utilisateur peut modifier ses informations personnelles
-- Le catalogue est interrogeable via une API REST publique (recherche par titre ou ISBN)
-
-**Besoins non fonctionnels :**
 
 - Sécurité : hachage des mots de passe, protection CSRF, protection contre l'injection SQL et le XSS, contrôle d'accès par rôle
 - Intégrité des données : impossibilité de supprimer un auteur ayant des livres publiés
@@ -124,6 +150,9 @@ Le projet étant réalisé en autonomie complète, l'organisation s'est appuyée
 | Composer | Gestion des dépendances PHP |
 | Firefox | Navigateur |
 | Powershell | Console de commande |
+| Doctrine | ORM (objet relation maping)intégré à Symfony pour
+simplifier et sécuriser l’interaction avec la base de données.
+| MariaDB| SGBD (serveur de gestion de base de données) stockage de donnée relationelles robuste.
 
 
 ---PAGE---
@@ -243,11 +272,6 @@ Une feuille de style dédiée (`css/style.css`) définit les variables de design
 *(Renvoi Annexe A2.)*
 
 ### 5.5 Diagrammes d'activité
-
-Deux flux critiques ont été modélisés :
-
-1. Parcours lecteur : recherche → consultation → lecture en ligne / téléchargement
-2. Parcours auteur : dépôt d'un livre (upload) → validation → publication
 
 *(Renvoi Annexe A3.)*
 
@@ -498,7 +522,11 @@ Ce projet a permis de mobiliser l'ensemble des compétences du référentiel CDA
 
 ### Remerciements
 
-*(À compléter : formateurs, tuteur pédagogique, entourage.)*
+Remerciements** Je tiens à exprimer ma gratitude envers mes formateurs, Manuel, Alexandre, Outman et Tomas, pour
+leur bienveillance, leur patience et leur pédagogie exemplaire. Leur soutien constant a été un pilier essentiel dans mon apprentissage et dans l’acquisition des compétences qui m’ont permis de réussir ce stage.
+
+Je souhaite également remercier mes collègues de la formation CDA pour leur esprit d’entraide et la bienveillance qui ont caractérisé notre groupe tout au long de cette
+aventure.
 
 ---PAGE---
 
