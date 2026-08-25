@@ -1,0 +1,53 @@
+@startuml Diagramme_de_Deploiement_symfoLivre
+title Diagramme de déploiement — symfoLivre
+
+actor "Utilisateur" as user
+
+node "Poste client" as client {
+    artifact "Navigateur web" as browser
+}
+
+cloud "Internet" as internet
+
+node "Serveur de production" as server {
+
+    node "Reverse proxy" as proxyNode {
+        artifact "Nginx / Apache" as proxy
+    }
+
+    node "Serveur d'application" as appNode {
+        artifact "PHP-FPM 8.2" as phpfpm
+        artifact "Application Symfony 7\n(symfoLivre)" as app
+        folder "uploads/books/" as uploads
+    }
+
+    node "Serveur de base de données" as dbNode {
+        database "MariaDB" as mariadb
+    }
+}
+
+user --> browser : utilise
+browser --> internet : requête HTTPS
+internet --> proxy : HTTPS (443)
+proxy --> phpfpm : FastCGI (port 9000)
+phpfpm --> app : exécute
+app --> mariadb : TCP 3306\n(requêtes SQL paramétrées)
+app --> uploads : lecture / écriture\nfichiers livres
+
+note right of proxy
+  Certificat TLS (Let's Encrypt)
+  Reverse proxy HTTP → FastCGI
+end note
+
+note right of mariadb
+  Utilisateur applicatif dédié
+  (pas de compte root en production)
+end note
+
+note bottom of appNode
+  Variables sensibles (DATABASE_URL,
+  APP_SECRET) injectées via
+  .env.prod.local, non versionné
+end note
+
+@enduml

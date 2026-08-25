@@ -100,7 +100,7 @@ c. Stockage de Fichiers
 a. Documentation du code source.
 b. Instructions d'installation et de déploiement.
 
-**Besoins fonctionnels :**
+**Besoins autres :**
 
 - Sécurité : hachage des mots de passe, protection CSRF, protection contre l'injection SQL et le XSS, contrôle d'accès par rôle
 - Intégrité des données : impossibilité de supprimer un auteur ayant des livres publiés
@@ -110,7 +110,7 @@ b. Instructions d'installation et de déploiement.
 
 **Livrables attendus :**
 
-- Site web public + espace authentifié (lecteur / auteur / admin)
+- Site web public avec espace authentifié (lecteur / auteur / admin)
 - API REST de recherche
 - Documentation d'installation (`README.md`)
 - Suite de tests automatisés
@@ -182,9 +182,9 @@ Une couche supplémentaire, indépendante du rendu HTML, expose une **API REST J
 
 | Couche | Responsabilité | Technologies |
 |---|---|---|
-| Présentation | Rendu HTML, formulaires, navigation | Twig, Bootstrap 5 |
+| Vue | Rendu HTML, formulaires, navigation | Twig, Bootstrap 5 |
 | Contrôle | Réception des requêtes HTTP, orchestration | Symfony Controllers |
-| Accès aux données | Requêtes, persistance | Doctrine ORM, Repositories |
+| Modèle | Requêtes, persistance | Doctrine ORM, Repositories |
 | Domaine | Règles métier (entités, contraintes) | Entités Doctrine |
 | Données | Stockage relationnel | MariaDB |
 
@@ -424,15 +424,11 @@ Scénarios de validation manuelle, en complément de la suite de tests automatis
 
 ## 10. Veille sur les vulnérabilités de sécurité
 
-*(Section à compléter avec les actions réellement menées.)*
-
 Le processus de veille repose sur :
 
 - L'exécution périodique de `composer audit` pour détecter les dépendances présentant des vulnérabilités connues (base CVE)
 - Le suivi des annonces de sécurité officielles Symfony (`symfony.com/blog/category/security-advisories`)
 - La mise à jour régulière des dépendances via `composer outdated` puis `composer update` ciblé
-
-*(Insérer ici, le cas échéant, une vulnérabilité détectée et la correction apportée — même mineure, cela démontre la mise en pratique de la veille.)*
 
 ---PAGE---
 
@@ -442,7 +438,7 @@ Le déploiement n'a pas été exécuté sur un serveur de production réel dans 
 
 ### 11.1 Préalables
 
-Serveur disposant de PHP 8.2+, d'une extension `pdo_mysql`, d'un accès SSH, d'un nom de domaine et d'un certificat HTTPS (Let's Encrypt).
+Serveur (linux) disposant de PHP 8.2+, d'une extension `pdo_mysql`, d'un accès SSH, d'un nom de domaine et d'un certificat HTTPS (Let's Encrypt).
 
 ### 11.2 Étapes de déploiement
 
@@ -462,7 +458,7 @@ Serveur web (Nginx ou Apache) configuré en reverse proxy vers PHP-FPM, document
 
 ### 11.4 Hébergeur envisagé
 
-*(À compléter selon le choix réel ou hypothétique, ex. : o2switch, OVH.)*
+*(OVH.)*
 
 ### 11.5 Monitoring et sauvegarde
 
@@ -494,7 +490,7 @@ Le fichier `README.md` du dépôt sert de documentation d'installation et de dé
 
 **Configuration de l'environnement de test.** La mise en place de PHPUnit a nécessité plusieurs itérations : conflit de nommage de base de données (le `dbname_suffix` de Doctrine ajoutant automatiquement le suffixe `_test`), droits insuffisants de l'utilisateur MariaDB applicatif, puis erreur de namespace lors de l'enregistrement du bundle DAMA Doctrine Test Bundle. Chaque cause a été isolée méthodiquement par lecture des messages d'erreur et vérification directe du code source du package installé.
 
-**Bug détecté par les tests automatisés.** La suite de tests a révélé un bug réel dans la méthode `search()` du `BookRepository` : le paramètre de requête utilisé pour la comparaison exacte sur l'ISBN (opérateur `=`) réutilisait par erreur la même valeur avec jokers (`% ... %`) que la recherche partielle par titre (opérateur `LIKE`), rendant la recherche par ISBN exact non fonctionnelle.
+**Bug détecté par les tests automatisés.** La suite de tests a révélé un bug réel dans la méthode `search()` du `BookRepository` : le paramètre de requête utilisé pour la comparaison exacte sur l'ISBN (opérateur `=`) réutilisait par erreur la même valeur avec (`% ... %`) que la recherche partielle par titre (opérateur `LIKE`), rendant la recherche par ISBN exact non fonctionnelle.
 
 ---CODE:php
 // Avant (bug) :
@@ -541,7 +537,7 @@ aventure.
 | A5 | Diagramme de déploiement |
 | A6 | MCD |
 | A7 | MLD |
-| A8 | Extrait du script SQL / migrations |
+| A8 | Extrait de la commande doctrine de création symfony |
 | A9 | Code : entité `Book` |
 | A10 | Code : `BookController` (dépôt d'un livre) |
 | A11 | Code : `Admin/UserController` |
