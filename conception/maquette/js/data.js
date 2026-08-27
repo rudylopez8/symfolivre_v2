@@ -38,7 +38,7 @@ const BOOKS = [
     year: 1994,
     type: "AUDIO",
     fileFormat: ".zip",
-    summary: "Dans un univers où la physique quantique autorise la duplication et le repliement de l'espace-temps, un scientifique mène une enquête vertigineuse sur la nature de la réalité. Roman d'hard SF primé, une plongée intellectuelle au cœur des paradoxes de la physique moderne.",
+    summary: "Dans un futur où les consciences humaines peuvent être numérisées sous forme de « Copies », Paul Durham cherche à créer un univers virtuel autonome et auto-généré. Son projet d'espace simulé remet en question la nature même de la réalité, de la conscience et de l'immortalité. Un roman majeur de la science-fiction spéculative qui explore les limites de l'existence post-humaine.",
     color: "#1a1a4e",
     icon: "🎧"
   },
@@ -51,7 +51,7 @@ const BOOKS = [
     year: 2002,
     type: "AUDIO",
     fileFormat: ".zip",
-    summary: "Dans un futur où l'humanité a colonisé la Voie lactée, une équipe d'explorateurs découvre une race alien d'intelligence supérieure. Baxter propose une réflexion puissante sur la survie des espèces face à l'extinction et la conquête interstellaire.",
+    summary: "Une fresque ambitieuse qui retrace des 10ènes de millions d'années d'histoire de la lignée humaine, des petits mammifères préhistoriques survivants aux astéroïdes jusqu'aux descendants lointains de l'humanité. À travers une succession de récits poignants, le roman dépeint la lutte perpétuelle pour la survie et l'adaptation biologique. Un hommage grandiose et impitoyable aux mécanismes de la sélection naturelle.",
     color: "#2c1810",
     icon: "🎧"
   }

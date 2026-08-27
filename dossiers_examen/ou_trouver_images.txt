@@ -1,0 +1,98 @@
+| N° | Contenu | où |
+|---|---|---|
+| A1 | Arborescence / parcours utilisateurs | captures d'écran du site selon profile |
+| A2 | Diagramme de classes UML | dans conception/UML/ClasseCase |
+| A3 | Diagrammes d'activités UML (parcours lecteur, parcours auteur) | dans conception/UML/activite |
+| A4 | Diagrammes de cas d'utilisation (Lecteur, Auteur, Administrateur) | dans conception/UML/useCase.puml |
+| A5 | Diagramme de déploiement | | dans conception/Diagramme_de_Deploiement.puml |
+| A6 | MCD | | dans conception/UML/mcd.puml |
+| A7 | MLD | | dans conception/UML/mld.puml |
+| A8 | Extrait de la commande doctrine de création symfony | | extrait à la fin du document |
+| A9 | Code : entité `Book` | | dans symfoLivre/src/Entity/Book.php |
+| A10 | Code : `BookController` (dépôt d'un livre) | | dans symfoLivre/src/Controller/BookController.php |
+| A11 | Code : `Admin/UserController` | | dans symfoLivre/src/Controller/Admin/UserController.php |
+| A12 | Code : `BookApiController` | | dans symfoLivre/src/Controller/Api/BookApiController.php |
+| A13 | Code : suite de tests PHPUnit | | dans ```PowerShell php bin/phpunit ``` |
+| A14 | Captures d'écran : maquette, interface publique, panel admin, jeu d'essai | | dans conception/maquette
+| A15 | Résultat `composer audit` | |  dans ```PowerShell composer audit ```
+| A16 | `README.md` — documentation d'installation et de déploiement | | dans README.md
+
+
+```powershell
+PS C:\REALCONSEIL\symfolivre_v2\symfoLivre> mysql --version
+C:\Program Files\MariaDB 12.0\bin\mysql.exe from 12.0.2-MariaDB, client 15.2 for Win64 (AMD64), source revision aab83aecdca15738d114cf5a2f223f1d12e4e6bd
+PS C:\REALCONSEIL\symfolivre_v2\symfoLivre> mysql -u root -p
+Enter password: ****
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 7
+Server version: 12.1.2-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> CREATE DATABASE symfolivre CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+Query OK, 1 row affected (0.013 sec)
+
+MariaDB [(none)]> CREATE USER 'symfo'@'localhost' IDENTIFIED BY 'symfo_password';
+Query OK, 0 rows affected (0.012 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON symfolivre.* TO 'symfo'@'localhost';
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [(none)]> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.005 sec)
+
+MariaDB [(none)]> EXIT;
+Bye
+PS C:\REALCONSEIL\symfolivre_v2\symfoLivre> php bin/console doctrine:database:create --if-not-exists
+Database `symfolivre` for connection named default already exists. Skipped.
+PS C:\REALCONSEIL\symfolivre_v2\symfoLivre> php bin/console doctrine:query:sql "SHOW TABLES"
+
+
+ [OK] 0 rows affected.
+
+
+PS C:\REALCONSEIL\symfolivre_v2\symfoLivre> php bin/console make:entity Category
+ created: src/Entity/Category.php
+ created: src/Repository/CategoryRepository.php
+
+ Entity generated! Now let's add some fields!
+ You can always add more fields later manually or by re-running this command.
+
+ New property name (press  to stop adding fields):
+ > label
+
+ Field type (enter ? to see all types) [string]:
+ >
+
+ Field length [255]:
+ > 127
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ >
+
+ updated: src/Entity/Category.php
+
+ Add another property? Enter the property name (or press  to stop adding fields):
+ > description
+
+ Field type (enter ? to see all types) [string]:
+ > text
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ > yes
+
+ updated: src/Entity/Category.php
+
+ Add another property? Enter the property name (or press  to stop adding fields):
+ >
+
+
+
+  Success!
+
+
+ Next: When you're ready, create a migration with php bin/console make:migration
+```
+
