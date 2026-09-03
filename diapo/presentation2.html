@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soutenance CDA - Projet symfoLivre</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --accent-color: #d69e2e;
+            --bg-light: #f8f9fa;
+            --text-dark: #2d3748;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 90vw;
+            height: 85vh;
+            margin: 5vh auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            display: none; /* Hidden by default */
+            padding: 40px;
+            transition: all 0.5s ease;
+        }
+
+        .slide-container.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-header {
+            border-bottom: 3px solid var(--accent-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 50px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .slide-number {
+            position: fixed;
+            bottom: 25px;
+            left: 50px;
+            font-weight: bold;
+            color: #718096;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .diagram-container {
+            text-align: center;
+            background: #fdfdfd;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diagram-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .bc-badge {
+            font-size: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            float: right;
+        }
+
+        ul li { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Page 1: Présentation -->
+    <div class="slide-container active" id="slide-1">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 text-center">
+            <h1 class="display-3 fw-bold" style="color: var(--primary-color);">symfoLivre</h1>
+            <h3 class="text-muted">Plateforme de Bibliothèque Numérique Accessible</h3>
+            <hr style="width: 100px; height: 5px; background-color: var(--accent-color);">
+            <p class="lead">Soutenance pour l'obtention du Titre Professionnel<br><strong>Concepteur Développeur d'Applications (CDA)</strong></p>
+            <div class="mt-5 p-3 bg-light border rounded">
+                <p class="mb-0">Présenté par : <strong>[Lopez Rudy]</strong></p>
+                <p>Date : Septembre 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Contexte -->
+    <div class="slide-container" id="slide-2">
+        <div class="slide-header">
+            <h2>Contexte du Projet</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Origine du besoin</h4>
+                <p>Inspiration issue du service <strong>EOLE</strong> (Association Valentin Haüy) : fournir des livres adaptés aux personnes en situation de handicap visuel ou moteur.</p>
+                <p>L'objectif est de créer une plateforme généraliste permettant la diffusion d'ouvrages en formats <strong>Texte (.txt, .md)</strong> et <strong>Audio (.zip/mp3)</strong>.</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Modalités de réalisation</h4>
+                <p>Projet réalisé en autonomie suite à un stage chez <strong>[BAM]</strong> (propriété intellectuelle restreinte).</p>
+                <p>Démarche visant à démontrer l'intégralité des compétences du référentiel CDA : de l'analyse au déploiement.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Environnement Technique -->
+    <div class="slide-container" id="slide-3">
+        <div class="slide-header">
+            <h2>Environnement & Outils <span class="bc-badge">BC01</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3 mb-3 border-primary">
+                    <h5>Développement</h5>
+                    <ul>
+                        <li><strong>IDE :</strong> VS Code</li>
+                        <li><strong>OS :</strong> Windows / PowerShell</li>
+                        <li><strong>Version :</strong> Symfony 7.4 / PHP 8.2</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 mb-3 border-primary">
+                    <h5>Données & Versioning</h5>
+                    <ul>
+                        <li><strong>SGBD :</strong> MariaDB 12.0</li>
+                        <li><strong>ORM :</strong> Doctrine</li>
+                        <li><strong>Versionning :</strong> Git</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 mb-3 border-primary">
+                    <h5>Client & Qualité</h5>
+                    <ul>
+                        <li><strong>Navigateurs :</strong> Chrome, Firefox</li>
+                        <li><strong>Tests :</strong> PHPUnit</li>
+                        <li><strong>Interface :</strong> Twig / Bootstrap 5</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4: Analyse Fonctionnelle -->
+    <div class="slide-container" id="slide-4">
+        <div class="slide-header">
+            <h2>Analyse des Besoins <span class="bc-badge">BC02</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <h4>Utilisateurs & Rôles</h4>
+                <ul>
+                    <li><span class="highlight">Visiteur :</span> Consultation et recherche.</li>
+                    <li><span class="highlight">Lecteur :</span> Lecture, téléchargement, panier.</li>
+                    <li><span class="highlight">Auteur :</span> Téléversement et gestion de ses œuvres.</li>
+                    <li><span class="highlight">Admin :</span> Modération, gestion utilisateurs et catégories.</li>
+                </ul>
+            </div>
+            <div class="col-md-7">
+                <div class="diagram-container">
+                    <img src="useCase.svg" alt="Diagramme Use Case">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 5: Conception des Flux -->
+    <div class="slide-container" id="slide-5">
+        <div class="slide-header">
+            <h2>Conception des Flux <span class="bc-badge">BC02</span></h2>
+        </div>
+        <p>L'application repose sur des processus critiques modélisés par diagrammes d'activités :</p>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card p-2 shadow-sm">
+                    <img src="Activite_Module_Auth_Inscription.svg" class="img-fluid" alt="Inscription">
+                    <small>Processus d'inscription</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-2 shadow-sm">
+                    <img src="Activite_Téléversement_Auteur_Ajouter_un_livre.svg" class="img-fluid" alt="Upload">
+                    <small>Téléversement d'un livre</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-2 shadow-sm">
+                    <img src="Activite_Module_Consultation_Recherche_et_Téléchargement.svg" class="img-fluid" alt="Search">
+                    <small>Recherche & Téléchargement</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 6: Modélisation des Données (MCD) -->
+    <div class="slide-container" id="slide-6">
+        <div class="slide-header">
+            <h2>Modélisation des Données (MCD) <span class="bc-badge">BC02</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Entités Clés</h4>
+                <ul>
+                    <li><strong>Utilisateur :</strong> Gestion des rôles et identité.</li>
+                    <li><strong>Livre :</strong> Métadonnées et chemin fichier.</li>
+                    <li><strong>Catégorie :</strong> Organisation thématique.</li>
+                    <li><strong>Panier :</strong> Table d'association User <-> Book.</li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="diagram-container">
+                    <img src="mcd.svg" alt="MCD">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 7: Modélisation Logique et Objet -->
+    <div class="slide-container" id="slide-7">
+        <div class="slide-header">
+            <h2>Du Relationnel vers l'Objet <span class="bc-badge">BC02</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Modèle Logique (MLD)</h5>
+                <div class="diagram-container" style="height: 40vh;">
+                    <img src="MLD.svg" alt="MLD">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h5>Diagramme de Classes (Symfony)</h5>
+                <div class="diagram-container" style="height: 40vh;">
+                    <img src="ClassDiagram.svg" alt="Class Diagram">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 8: Architecture Logicielle -->
+    <div class="slide-container" id="slide-8">
+        <div class="slide-header">
+            <h2>Architecture Logicielle <span class="bc-badge">BC01 / BC02</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>L'application suit l'architecture <strong>MVC (Modèle-Vue-Contrôleur)</strong> native à Symfony :</p>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-primary text-white rounded">
+                            <strong>Modèle (Entity/Repository)</strong><br>
+                            Accès aux données via Doctrine ORM.
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-success text-white rounded">
+                            <strong>Contrôleur</strong><br>
+                            Logique métier et routage des requêtes.
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-warning text-dark rounded">
+                            <strong>Vue (Twig)</strong><br>
+                            Interface utilisateur dynamique et responsive.
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h5>Sécurité appliquée :</h5>
+                    <ul>
+                        <li><strong>Firewall Symfony :</strong> Gestion des sessions et authentification.</li>
+                        <li><strong>Access Control :</strong> Restriction des routes par rôles (ROLE_USER, ROLE_AUTEUR, ROLE_ADMIN).</li>
+                        <li><strong>Validation :</strong> Protection CSRF sur tous les formulaires de suppression.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 9: Développement des Composants -->
+    <div class="slide-container" id="slide-9">
+        <div class="slide-header">
+            <h2>Développement & Métier <span class="bc-badge">BC01</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Fonctionnalités Clés Implémentées</h4>
+                <ul>
+                    <li><strong>Gestion des fichiers :</strong> Système de stockage sécurisé dans <code>/uploads</code> avec noms de fichiers uniques.</li>
+                    <li><strong>Moteur de recherche :</strong> Requêtes personnalisées dans le <code>BookRepository</code> (LIKE pour titre, '=' pour ISBN).</li>
+                    <li><strong>API REST :</strong> Endpoint JSON pour l'interrogation externe des ouvrages.</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h4>Défis Techniques</h4>
+                <div class="alert alert-info">
+                    <strong>Gestion des types :</strong> Distinction stricte entre lecture en ligne (.txt/.md) et téléchargement obligatoire pour l'audio (.zip).
+                </div>
+                <div class="alert alert-warning">
+                    <strong>Intégrité :</strong> Interdiction de supprimer un auteur possédant encore des livres (Contrainte FK).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 10: Stratégie de Tests -->
+    <div class="slide-container" id="slide-10">
+        <div class="slide-header">
+            <h2>Assurance Qualité <span class="bc-badge">BC03</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm mb-3">
+                    <h5>Tests Unitaires</h5>
+                    <p>Vérification des entités (ex: logique des rôles dans <code>User.php</code>).</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm mb-3">
+                    <h5>Tests d'Intégration</h5>
+                    <p>Validation des requêtes Repository avec base de données de test.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm mb-3">
+                    <h5>Tests Fonctionnels</h5>
+                    <p>Simulation de parcours utilisateurs via <code>WebTestCase</code> (Login, accès interdits).</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 p-3 bg-light border rounded">
+            <strong>Résultat marquant :</strong> Correction d'un bug sur la recherche ISBN exacte détecté durant la phase de tests automatisés.
+        </div>
+    </div>
+
+    <!-- Page 11: Déploiement & DevOps -->
+    <div class="slide-container" id="slide-11">
+        <div class="slide-header">
+            <h2>Déploiement & DevOps <span class="bc-badge">BC03</span></h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Procédure de Mise en Production</h4>
+                <ol>
+                    <li>Configuration du serveur (PHP 8.2, MariaDB, Apache/Nginx).</li>
+                    <li>Installation des dépendances via <code>composer install --no-dev</code>.</li>
+                    <li>Migration de la base de données : <code>doctrine:migrations:migrate</code>.</li>
+                    <li>Optimisation du cache Symfony.</li>
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <h4>Maintenance & Veille</h4>
+                <ul>
+                    <li>Utilisation de <strong>Git</strong> pour le versioning.</li>
+                    <li>Suivi des logs Symfony pour le débogage.</li>
+                    <li>Veille technique sur les mises à jour de sécurité Symfony.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 12: Conclusion -->
+    <div class="slide-container" id="slide-12">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 text-center">
+            <h2 style="color: var(--primary-color);">Conclusion & Bilan</h2>
+            <div class="row mt-5 text-start">
+                <div class="col-md-6">
+                    <h4>Compétences Validées</h4>
+                    <ul>
+                        <li>✅ Analyse et Modélisation (MCD/MLD)</li>
+                        <li>✅ Développement Fullstack Symfony</li>
+                        <li>✅ Sécurisation des accès et des données</li>
+                        <li>✅ Mise en œuvre de tests automatisés</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Évolutions Possibles</h4>
+                    <ul>
+                        <li>Intégration d'un lecteur audio JS nativement dans le navigateur.</li>
+                        <li>Système de notation et commentaires sur les livres.</li>
+                        <li>Mise en place d'un pipeline CI/CD (GitHub Actions).</li>
+                    </ul>
+                </div>
+            </div>
+            <h3 class="mt-5 fw-bold" style="color: var(--accent-color);">Merci de votre attention !</h3>
+            <p class="lead">Je suis désormais ouvert à vos questions.</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons">
+        <button class="btn btn-outline-primary px-4" onclick="changeSlide(-1)">Précédent</button>
+        <button class="btn btn-primary px-4" onclick="changeSlide(1)">Suivant</button>
+    </div>
+
+    <div class="slide-number" id="slideNum">Page 1 / 12</div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 12;
+
+        function changeSlide(direction) {
+            // Hide current slide
+            document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+            
+            currentSlide += direction;
+
+            // Bound checks
+            if (currentSlide < 1) currentSlide = 1;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+
+            // Show new slide
+            document.getElementById(`slide-${currentSlide}`).classList.add('active');
+            
+            // Update slide number
+            document.getElementById('slideNum').innerText = `Page ${currentSlide} / ${totalSlides}`;
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
